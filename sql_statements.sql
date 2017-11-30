@@ -52,5 +52,12 @@ INSERT INTO Caller_Employee_Table
 ('987', 'Posco', 'Foreman', 'Logistics', '013')
 ('9876', 'xiaohu', 'Operator', 'Customer_Service', '016')
 /* Problem Status Table */
-
+INSERT INTO Problem_Status
+(Status_ID, Status_Date, Status_Desc, Account_ID, Problem_ID)VALUES
+('1', '12/11/17', 'Open', '2312', '1')
+('2', '30/12/16', 'Pending', '2313', '2')
+('3', '12/11/15', 'Close', '2314', '3')
+('4', '11/12/17', 'Close', '2315', '4')
+('5', '25/08/17', 'Open', '2316', '5')
+('6', '22/09/17', 'Pending', '2317', '6')
 /* Equipment Table */

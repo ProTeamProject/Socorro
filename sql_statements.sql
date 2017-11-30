@@ -10,6 +10,12 @@ INSERT INTO Specialist (Account_ID, Specialist_Name, Average_Time, Number_Solved
 ('2457', 'Edna', '2.3', '12', 'False');
 
 /* Problem Type Table */
+INSERT INTO Problem Type (Problem_Type_Name, Specialist_ID, Counter) VALUES
+('Networking', '2457', 42),
+('Security', '2455', '21'),
+('Email', '2453', '12'),
+('Word Processing', '2456', '32'),
+('Printing', '2454', '52');
 
 /* Operator Table */
 

@@ -18,11 +18,20 @@ INSERT INTO Problem Type (Problem_Type_Name, Specialist_ID, Counter) VALUES
 ('Printing', '2454', '52');
 
 /* Operator Table */
-
+INSERT INTO Operator_Table
+(Account_ID, Operator_ID, Operator_Name, Number_Calls)
+VALUES ('2312','12','Alice Smith','4'),('2315','13','Olly Pethick','7'),('2319','15','Josh Hope','9'),('2321','72','Harrison Curtis','3')
 /* Problem Table */
 
 /* Software Table */
 
+INSERT INTO Software_Table (Software_License_Number, Problem_ID, Software_Name, Operating_System, Affected_Hardware) VALUES
+('2738918ff2873646 ','4','Microsoft Word','Windows 10','Computer'),
+('48857845asdgA4','3','Microsoft Outlook','Macintosh','Laptop'),
+('aff141fda511','3','Microsoft Outlook','Linux','Computer '),
+('gijsgpaj142dna','3','Microsoft Outlook','Macintosh','Laptop'),
+('dagjkndaogndao12','4','Microsoft Word','Windows 10','Laptop'),
+('ignrierfbis21ngona','4','Microsoft Word','Windows 10','Computer')
 /* Caller/Employee Table */
 
 /* Problem Status Table */

@@ -27,14 +27,14 @@ INSERT INTO Operator_Table (Account_ID, Operator_ID, Operator_Name, Number_Calls
 /* Problem Table */
 INSERT INTO Problem_Table
 (Operator_ID, Specialist_ID, Caller_ID, Close_Date) VALUES
-('12', '2452', '3543', '13/10/17')
-('13', '2453', '6534', '15/10/17')
-('72', '2452', '1232', '16/11/17')
-('15', '2455', '123', '15/02/12')
-('12', '2456', '987', '27/04/16')
-('13', '2457', '9876', '01/12/17')
-/* Software Table */
+('12', '2452', '3543', '13/10/17'),
+('13', '2453', '6534', '15/10/17'),
+('72', '2452', '1232', '16/11/17'),
+('15', '2455', '123', '15/02/12'),
+('12', '2456', '987', '27/04/16'),
+('13', '2457', '9876', '01/12/17');
 
+/* Software Table */
 INSERT INTO Software_Table (Software_License_Number, Problem_ID, Software_Name, Operating_System, Affected_Hardware) VALUES
 ('2738918ff2873646 ','4','Microsoft Word','Windows 10','Computer'),
 ('48857845asdgA4','3','Microsoft Outlook','Macintosh','Laptop'),
@@ -42,6 +42,7 @@ INSERT INTO Software_Table (Software_License_Number, Problem_ID, Software_Name, 
 ('gijsgpaj142dna','3','Microsoft Outlook','Macintosh','Laptop'),
 ('dagjkndaogndao12','4','Microsoft Word','Windows 10','Laptop'),
 ('ignrierfbis21ngona','4','Microsoft Word','Windows 10','Computer');
+
 /* Caller/Employee Table */
 INSERT INTO Caller_Employee_Table
 (Caller_ID, Caller_Name, Job, Department, Extension) VALUES
@@ -51,6 +52,7 @@ INSERT INTO Caller_Employee_Table
 ('123', 'Punjab', 'Accountant', 'Finance', '015')
 ('987', 'Posco', 'Foreman', 'Logistics', '013')
 ('9876', 'xiaohu', 'Operator', 'Customer_Service', '016')
+
 /* Problem Status Table */
 INSERT INTO Problem_Status
 (Status_ID, Status_Date, Status_Desc, Account_ID, Problem_ID)VALUES
@@ -61,3 +63,5 @@ INSERT INTO Problem_Status
 ('5', '25/08/17', 'Open', '2316', '5')
 ('6', '22/09/17', 'Pending', '2317', '6')
 /* Equipment Table */
+INSERT INTO Equipment_Table (Equipment_Serial_Number, Problem_ID, Equipment_Name, Equipment_Make, Equipment_Type)
+('47392837283628 ','1','Epson 23x43 ','Epson','Printer '),('98390820dw33','2','Sony Mouse','Sony','Mouse'),('efcf83djj377383','3','Dell GTX 12','Dell','Laptop'),('178s8jn38892ndj','4','Chiller EX13','Samsung','Fridge Freezer'),('efknrn84fn84hf','5','MacBook pro','Apple','MacBook'),

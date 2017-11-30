@@ -37,3 +37,5 @@ INSERT INTO Software_Table (Software_License_Number, Problem_ID, Software_Name, 
 /* Problem Status Table */
 
 /* Equipment Table */
+INSERT INTO Equipment_Table (Equipment_Serial_Number, Problem_ID, Equipment_Name, Equipment_Make, Equipment_Type)
+('47392837283628 ','1','Epson 23x43 ','Epson','Printer '),('98390820dw33','2','Sony Mouse','Sony','Mouse'),('efcf83djj377383','3','Dell GTX 12','Dell','Laptop'),('178s8jn38892ndj','4','Chiller EX13','Samsung','Fridge Freezer'),('efknrn84fn84hf','5','MacBook pro','Apple','MacBook'),

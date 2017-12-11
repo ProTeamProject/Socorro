@@ -24,7 +24,13 @@ Values('1','12','2452','3543','13/10/17'),
       ('6','13','2457','9876','01/12/17');
 
 /* Software Problem Table: Brad Reeder*/
-
+INSERT INTO Software_Problem Table (Problem_ID, Software_License_Number, Operating_System, Affected_Hardware)
+Values('1', '2738918ff2873646','Windows 10','Computer'),
+	  ('2','48857845asdgA4','Macintosh','Laptop'),
+	  ('3','aff141fda511','Linux','Computer'),
+	  ('4','gijsgpaj142dna','Macintosh','Laptop'),
+	  ('5','dagjkndaogndao12','Windows 10','Laptop'),
+	  ('5','ignrierfbis21ngona','Windows 10','Computer')
 /* Status Table: Harry Salmon*/
 
 /* Specialises In Table: Joshua Hope*/
@@ -47,6 +53,12 @@ Values('Dell GTX 12','Dell','Computer'),
       ('Acer Predator','Acer','Laptop');
 
 /* Problem Counter Table: Brad Reeder*/
+INSERT INTO Problem Counter TABLE (Problem_Type_ID, Occurences)
+VALUES ('1','142')
+	   ('2','124')
+	   ('3','152')
+	   ('4','612')
+	   ('5','532')
 
 /* Problem Type Table: Harry Salmon*/
 
@@ -70,5 +82,11 @@ Values('3543','Alex Jones','Customer Assistant','Customer Services','12'),
       ('987','Posco','Foreman','Logistics','12');
 
 /* Equipment Table: Brad Reeder*/
+INSERT INTO Equipment Table (Equipment_Serial_Number, Equipment_Name)
+VALUES ('47392837283628','Epson 23x43')
+	   ('98390820dw33','Sony Mouse')
+	   ('efcf83djj377383','Dell GTX 12')
+	   ('178s8jn38892ndj','Fridge Freezer EX13')
+	   ('efknrn84fn84hf','MacBook pro')
 
 /* Equipment Problem Table: Harry Salmon*/

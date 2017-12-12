@@ -12,6 +12,15 @@ VALUES ('2312',	'Alice',	'aliceSmith',	'K2p98h23',	'Operator'),
 ('2321',	'Harrison',	'harrisonCurtis',	'0b67P9g1',	'operator')
 
 /* Specialist Table: Harrison Curtis */
+INSERT INTO Specialist_Table
+(Account_ID, Average_Time, Problems_Assigned, Busy)
+VALUES
+('2313', '5.2', '23', '3', 'FALSE'),
+('2314', '2.3', '42', '2', 'TRUE'),
+('2316', '0.8', '8', '5', 'TRUE'),
+('2317', '4.2', '64', '8', 'FALSE'),
+('2318', '6.7', '52', '12', 'TRUE'),
+('2320', '2.3', '12', '2'. 'FALSE'),
 
 /* Problem Table: Aaron Homes*/
 
@@ -42,6 +51,14 @@ VALUES('1','12'),
 ('5',	'12')
 
 /* Problem Status Table: Harrison Curtis */
+INSERT INTO Status_Table
+(Status_ID, Status_Type)
+VALUES
+('134', 'call'),
+('135', 'open'),
+('136', 'close'),
+('137', 'assign'),
+('138', 'note'),
 
 /* Equipment Register Table: Aaron Homes*/
 
@@ -71,6 +88,15 @@ VALUES ('2312',	'4'),
 
 
 /* Software Table: Harrison Curtis*/
+INSERT INTO Software_Table
+(Software_License_Number, Software_Name)
+VALUES
+('2738918ff2873646', 'Microsoft Word'),
+('48857845asdgA4', ' Microsoft Outlook'),
+('aff141fda511','Microsoft Outook'),
+('gijsgpaj142dna','Microsoft Outook'),
+('dagjkndaogndao12','Microsoft Outook'),
+('ignrierfbis21ngona','Microsoft Outook'),
 
 /* Employee Table: Aaron Homes */
 

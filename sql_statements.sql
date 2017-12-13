@@ -70,7 +70,7 @@ Values('Dell GTX 12','Dell','Computer'),
       ('Acer Predator','Acer','Laptop');
 
 /* Problem Counter Table: Brad Reeder*/
-INSERT INTO Problem Counter TABLE (Problem_Type_ID, Occurences)
+INSERT INTO Problem Counter Table (Problem_Type_ID, Occurences)
 VALUES ('1','142')
 	   ('2','124')
 	   ('3','152')

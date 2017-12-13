@@ -62,7 +62,7 @@ INSERT INTO Problem Status (Problem ID, Comment, Commenter, status date)
 VALUES ('1', 'loss of connection', '2312', '11/2/1'),
 ('2', 'help needed formating', '2315', '11/3/17'),
 ('3', 'a virus has been detected', '2319', '11/3/17'),
-('4', 'paper jam', '2321', 12/3/17'),
+('4', 'paper jam', '2321', '12/3/17'),
 ('5', 'emails not send', '2321', '12/3/17'),
 ('6', 'loss of email', '2312', '13/3/17');
 

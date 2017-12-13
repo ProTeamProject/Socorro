@@ -40,7 +40,14 @@ Values('1', '2738918ff2873646','Windows 10','Computer'),
 	  ('4','gijsgpaj142dna','Macintosh','Laptop'),
 	  ('5','dagjkndaogndao12','Windows 10','Laptop'),
 	  ('5','ignrierfbis21ngona','Windows 10','Computer')
+
 /* Status Table: Harry Salmon*/
+INSERT INTO Status (Status ID, Status Type)
+VALUES ('134', 'call'),
+('135', 'open'),
+('136', 'close'),
+('137', 'assign'),
+('138', 'note');
 
 /* Specialises In Table: Joshua Hope*/
 INSERT INTO Specailist_In (Problem_Type_ID, Account_ID)
@@ -50,15 +57,15 @@ VALUES('1','12'),
 ('4',	'15'),
 ('5',	'12')
 
-/* Problem Status Table: Harrison Curtis */
-INSERT INTO Status_Table
-(Status_ID, Status_Type)
-VALUES
-('134', 'call'),
-('135', 'open'),
-('136', 'close'),
-('137', 'assign'),
-('138', 'note'),
+/* Problem Status Table: Harrison Curtis - HS redone */
+INSERT INTO Problem Status (Problem ID, Comment, Commenter, status date)
+VALUES ('1', 'loss of connection', '2312', '11/2/1'),
+('2', 'help needed formating', '2315', '11/3/17'),
+('3', 'a virus has been detected', '2319', '11/3/17'),
+('4', 'paper jam', '2321', 12/3/17'),
+('5', 'emails not send', '2321', '12/3/17'),
+('6', 'loss of email', '2312', '13/3/17');
+
 
 /* Equipment Register Table: Aaron Homes*/
 
@@ -77,7 +84,14 @@ VALUES ('1','142')
 	   ('4','612')
 	   ('5','532')
 
+
 /* Problem Type Table: Harry Salmon*/
+INSERT INTO Problem Type (Problem_Type_ID, Problem_Type_Name)
+VALUES ('1', 'networking'),
+('2', 'security'),
+('3', 'email'),
+('4', 'word processing'),
+('5', 'printing');
 
 /* Operator Table: Joshua Hope*/
 INSERT INTO Operator_Table
@@ -115,4 +129,11 @@ VALUES ('47392837283628','Epson 23x43')
 	   ('178s8jn38892ndj','Fridge Freezer EX13')
 	   ('efknrn84fn84hf','MacBook pro')
 
+
 /* Equipment Problem Table: Harry Salmon*/
+INSERT INTO Equipment Problem (Problem ID, Equipment Serial Number)
+VALUES ('1', '47392837283628'),
+('2', '98390820dw33'),
+('3', 'efcf83djj377383'),
+('4', '178s8jn38892ndj'),
+('5', 'efknrn84fn84hf');

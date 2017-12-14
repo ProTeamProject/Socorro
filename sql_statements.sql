@@ -110,7 +110,7 @@ VALUES ('1', 'networking'),
 ('5', 'printing');
 
 /* Operator Table: Joshua Hope*/
-INSERT INTO Operator_Table
+INSERT INTO Operator_Table(Account_ID, Number_Calls)
 VALUES ('2312',	'4'),
 ('2315',	'7'),
 ('2319',	'9'),

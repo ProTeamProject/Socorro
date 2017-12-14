@@ -105,7 +105,7 @@ VALUES
 ('5', 'printing');
 
 /* Operator Table: Joshua Hope*/
-INSERT INTO Operator_Table (Account_ID, Number_Calls)
+INSERT INTO Operator (Account_ID, Number_Calls)
 VALUES
 ('2312',	'4'),
 ('2315',	'7'),
@@ -113,7 +113,7 @@ VALUES
 ('2321',	'3')
 
 /* Software Table: Harrison Curtis*/
-INSERT INTO Software_Table (Software_License_Number, Software_Name)
+INSERT INTO Software (Software_License_Number, Software_Name)
 VALUES
 ('2738918ff2873646', 'Microsoft Word'),
 ('48857845asdgA4', ' Microsoft Outlook'),

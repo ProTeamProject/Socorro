@@ -14,7 +14,7 @@
 
   // Associative array
   while ($row = mysqli_fetch_assoc($result)) {
-    echo $row['Problem_ID'];
+    echo $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_Date'] . " " . $row['Problem_Type_ID'] . " " . $row['State'];
   }
 
   // Free result set

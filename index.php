@@ -5,8 +5,8 @@
   <title>Socorro</title>
 </head>
 <body>
-  <p>
-    Test
-  </p>
+  <?php
+    echo '<p> Hello </p>';
+  ?>
 </body>
 </html>

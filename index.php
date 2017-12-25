@@ -9,12 +9,18 @@
   <?php
 
   // Create sql statement and query
-  $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_Date, Problem.Problem_Type_ID, Problem.State FROM Problem, Employee WHERE Problem.Caller_ID = Employee.Caller_ID;";
+  $sql = "SELECT Problem_ID, caller_iD, Open_date, state FROM Problem WHERE state != 'closed' ORDER BY Open_date desc;";
+  $sql2 = "SELECT Problem_ID, caller_iD, Open_date, state FROM Problem WHERE state != 'closed' ORDER BY Open_date asc;";
   $result = mysqli_query($con, $sql);
+  $result2 = mysqli_query($con, $sql2);
 
   // Associative array
   while ($row = mysqli_fetch_assoc($result)) {
-    echo $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_Date'] . " " . $row['Problem_Type_ID'] . " " . $row['State'] . "<br />";
+    echo $row['Problem_ID'] . " " . $row['caller_iD'] . " " . $row['Open_date'] . " " . $row['state'] . " " . $row['State'] . "<br />";
+  }
+  //needs styling to output the two different arrays apart
+  while ($row = mysqli_fetch_assoc($result2)) {
+    echo $row['Problem_ID'] . " " . $row['caller_iD'] . " " . $row['Open_date'] . " " . $row['state'] . " " . $row['State'] . "<br />";
   }
 
   // Free result set

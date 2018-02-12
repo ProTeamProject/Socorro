@@ -28,11 +28,11 @@ ORDER BY problem.Open_date asc";
 
   // Associative array
   while ($row = mysqli_fetch_assoc($result)) {
-    echo "<a href='".$row['Problem_ID']."'</a>" . " " . $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_date'] . " " . $row['Status_Date'] . " " . $row['problem_type_name'] . " " . $row['state'] . "<br />";
+    echo "<a href='/problem/index.php?id=".$row['Problem_ID']."'</a>" . " " . $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_date'] . " " . $row['Status_Date'] . " " . $row['problem_type_name'] . " " . $row['state'] . "<br />";
   }
   //needs styling to output the two different arrays apart
   while ($row = mysqli_fetch_assoc($result2)) {
-    echo "<a href='".$row['Problem_ID']."'</a>" . " " . $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_date'] . " " . $row['Status_Date'] . " " . $row['problem_type_name'] . " " . $row['state'] . "<br />";
+    echo "<a href='/problem/index.php?id=".$row['Problem_ID']."'</a>" . " " . $row['Problem_ID'] . " " . $row['Caller_Name'] . " " . $row['Open_date'] . " " . $row['Status_Date'] . " " . $row['problem_type_name'] . " " . $row['state'] . "<br />";
   }
   // Free result set
   mysqli_free_result($result);

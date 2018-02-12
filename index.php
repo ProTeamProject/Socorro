@@ -10,7 +10,7 @@
 
   // Create sql statement and query
 
-  $sql = "SELECT problem.Problem_ID, employee.Caller_Name, DATE_FORMAT(problem.Open_date, \"%D %M %Y %H:%i\"), problem_status.Status_Date, problem_type.problem_type_name, problem.state
+  $sql = "SELECT problem.Problem_ID, employee.Caller_Name, DATE_FORMAT(problem.Open_date, "%D %M %Y %H:%i"), problem_status.Status_Date, problem_type.problem_type_name, problem.state
 FROM Problem
 INNER JOIN employee on employee.Caller_ID = problem.Caller_ID
 INNER JOIN problem_status on problem_status.Problem_ID = problem.Problem_ID

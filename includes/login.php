@@ -9,35 +9,25 @@ if (isset($_POST['submit'])) {
   include 'db.php';
 
   // Retrieve username and password
-  $uname = mysqli_real_escape_string($con, $_POST['uname']);
-  $pword = mysqli_real_escape_string($con, $_POST['pword']);
+  $uname = $_POST['uname'];
+  $pword = $_POST['pword'];
 
   // Error handling
   if (empty($uname) || empty($pword)) {
     header("Location: ../index.php?login=empty");
     exit();
   } else {
-
-    $sql = "SELECT * FROM Account WHERE Username = '$uname';";
-    $result = mysqli_query($con, $sql);
-    /*
-    $sql = "SELECT * FROM Account WHERE Username = ?;";
-    $stmt = mysqli_stmt_init($con);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-      echo 'SQL Error';
-    } else {
-      mysqli_stmt_bind_param($stmt, "s", $uname);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-    }
-    */
-    $resultCheck = mysqli_num_rows($result);
+    $sql = "SELECT * FROM Account WHERE Username = :uname;";
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(':uname', $uname);
+    $stmt->execute();
+    $resultCheck = $stmt->rowCount();
     if ($resultCheck < 1) {
       header("Location: ../index.php?login=invaliduser");
       //mysqli_stmt_close($stmt);
       exit();
     } else {
-      if ($row = mysqli_fetch_assoc($result)) {
+      if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // Dehash password
         $hashPwordCheck = password_verify($pword, $row['Password']);
         if (!$hashPwordCheck) {

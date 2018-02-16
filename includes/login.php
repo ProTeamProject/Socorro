@@ -24,7 +24,6 @@ if (isset($_POST['submit'])) {
     $resultCheck = $stmt->rowCount();
     if ($resultCheck < 1) {
       header("Location: ../index.php?login=invaliduser");
-      //mysqli_stmt_close($stmt);
       exit();
     } else {
       if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -32,7 +31,6 @@ if (isset($_POST['submit'])) {
         $hashPwordCheck = password_verify($pword, $row['Password']);
         if (!$hashPwordCheck) {
           header("Location: ../index.php?login=incorrect");
-          //mysqli_stmt_close($stmt);
           exit();
         } else if ($hashPwordCheck) {
           // Log in
@@ -41,7 +39,6 @@ if (isset($_POST['submit'])) {
           $_SESSION['u_username'] = $row['Username'];
           $_SESSION['u_type'] = $row['Job_Type'];
           header("Location: ../dummy_dashboard.php?login=success");
-          //mysqli_stmt_close($stmt);
           exit();
         }
       }

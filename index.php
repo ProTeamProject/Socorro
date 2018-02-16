@@ -2,8 +2,8 @@
 
 session_start();
 
-if (isset($_SESSION[u_id])) {
-  header("Location: ../dashboard.php");
+if (isset($_SESSION['u_id'])) {
+  header("Location: ../dummy_dashboard.php");
   exit();
 }
 

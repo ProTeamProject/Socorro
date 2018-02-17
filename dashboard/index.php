@@ -26,21 +26,22 @@
 
 <body>
   <?php
+  $uid = $_SESSION['u_id'];
 
   if (isset($_SESSION['u_type'])) {
     //change to operator
-    if ($_SESSION['u_type'] == 'specialist') {
-      $sql = "SELECT problem.Problem_ID, employee.Caller_Name, problem.Open_date, problem_status.Status_Date, problem_type.problem_type_name, problem.state
+    if ($_SESSION['u_type'] == 'operator') {
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_type.problem_type_name, Problem.state
     FROM Problem
-    LEFT JOIN employee on employee.Caller_ID = problem.Caller_ID
-    LEFT JOIN problem_status on problem_status.Problem_ID = problem.Problem_ID
-    LEFT JOIN problem_type on problem_type.Problem_Type_ID = problem.Problem_Type_ID ORDER BY problem.Open_date desc";
-      $sql2 = "SELECT problem.Problem_ID, employee.Caller_Name, problem.Open_date, problem_status.Status_Date, problem_type.problem_type_name, problem.state
+    LEFT JOIN employee on Employee.Caller_ID = Problem.Caller_ID
+    LEFT JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
+    LEFT JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID ORDER BY Problem.Open_date desc";
+      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_Type.problem_type_name, Problem.state
     FROM Problem
-    LEFT JOIN employee on employee.Caller_ID = problem.Caller_ID
-    LEFT JOIN problem_status on problem_status.Problem_ID = problem.Problem_ID
-    LEFT JOIN problem_type on problem_type.Problem_Type_ID = problem.Problem_Type_ID
-    WHERE problem.state != 'closed' ORDER BY problem.Open_date asc";
+    LEFT JOIN employee on Employee.Caller_ID = Problem.Caller_ID
+    LEFT JOIN problem_status on Problem_Status.Problem_ID = Problem.Problem_ID
+    LEFT JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID
+    WHERE Problem.state != 'closed' ORDER BY Problem.Open_date asc";
 
       $stmt = $con->prepare($sql);
       $stmt->bindParam(':output', $output, PDO::PARAM_INT);
@@ -48,8 +49,28 @@
       $stmt2 = $con->prepare($sql2);
       $stmt2->execute();
 
-    } else {
-      echo 'specialist dashboard';
+    } else if ($_SESSION['u_type'] == 'specialist') {
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_type.problem_type_name, Problem.state
+    FROM Problem
+    INNER JOIN employee on Employee.Caller_ID = Problem.Caller_ID
+    INNER JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
+    INNER JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID
+   and Problem.Specialist_Account_ID = :uid
+    ORDER BY Problem.Open_date desc";
+      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
+    FROM Problem
+    INNER JOIN employee on Employee.Caller_ID = Problem.Caller_ID
+    INNER JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
+    INNER JOIN problem_type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+    and Problem.Specialist_Account_ID = :uid WHERE Problem.state != 'closed'
+    ORDER BY Problem.Open_date asc";
+
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(':uid', $uid);
+    $stmt->execute();
+    $stmt2 = $con->prepare($sql2);
+    $stmt2->bindParam(':uid', $uid);
+    $stmt2->execute();
     }
   }
 
@@ -81,7 +102,14 @@
 
     <input type="radio" name="tabs" id="tab1" checked>
     <div class="tab-label-content" id="tab1-content">
-      <label class="tab__label" for="tab1">Most Recent Problems</label>
+      <label class="tab__label" for="tab1">
+        <?php if ($_SESSION['u_type'] == 'operator') {
+                echo 'Most Recent Problems';
+              } else if ($_SESSION['u_type'] == 'specialist') {
+                echo 'Recently Assigned Problems';
+              }
+        ?>
+      </label>
       <div class="tab-content">
 
 
@@ -147,7 +175,14 @@
 
     <input type="radio" name="tabs" id="tab2">
     <div class="tab-label-content" id="tab2-content">
-      <label  class="tab__label" for="tab2">Longest Unsolved Problems</label>
+      <label  class="tab__label" for="tab2">
+        <?php if ($_SESSION['u_type'] == 'operator') {
+                echo 'Longest Unsolved Problems';
+              } else if ($_SESSION['u_type'] == 'specialist') {
+                echo 'Longest Unsolved Assigned Problems';
+              }
+        ?>
+      </label>
       <div class="tab-content">
         <div class="problems animated fadeIn">
           <div class="problem__titles h-padding-small ">

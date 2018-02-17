@@ -42,12 +42,24 @@
     <div class="btn__new">
       <button class="toggle-button" onclick="closeNav();">☰</button>
       <div class="menu__desktop">
-        <div class="dropdown">
-        <a href="../new"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
-        <div class="dropdown-content">
-          <a href="">New Problem</a>
-          </div>
-        </div>
+        <?php
+
+        if ($_SESSION['u_type'] == 'operator') {
+                echo '<div class="dropdown">
+                <a href="../new"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                <div class="dropdown-content">
+                  <a href="">New Problem</a>
+                  </div>
+                </div>';
+              } else if ($_SESSION['u_type'] == 'specialist') {
+                echo '<div class="dropdown">
+                <a href="#openModal"><i class="fa fa-hourglass" aria-hidden="true"></i></a>
+                <div class="dropdown-content">
+                  <a href="">Mark as Busy</a>
+                  </div>
+                </div>';
+              }
+         ?>
         <div class="dropdown">
           <div style=""></div>
         <a><i id="google_translate_element" class="fa fa-language" aria-hidden="true"></i></a>

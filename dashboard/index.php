@@ -50,6 +50,13 @@
       $stmt2->execute();
 
     } else if ($_SESSION['u_type'] == 'specialist') {
+      //check if Busy
+      $sql_busy = "SELECT busy FROM Specialist WHERE Account_ID = :uid";
+      $stmt = $con->prepare($sql_busy);
+      $stmt->bindParam(':uid', $uid);
+      $stmt->execute();
+      $row_busy = $stmt->fetch(PDO::FETCH_ASSOC);
+
       $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
     FROM Problem
     INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
@@ -179,7 +186,7 @@
         <?php if ($_SESSION['u_type'] == 'operator') {
                 echo 'Longest Unsolved Problems';
               } else if ($_SESSION['u_type'] == 'specialist') {
-                echo 'Longest Unsolved Assigned Problems';
+                echo 'Longest Unsolved Problems';
               }
         ?>
       </label>
@@ -255,7 +262,28 @@
 
 
   </main>
-
+  <div id="openModal" class="modalDialog">
+    <div>
+      <a href="#close" title="Close" class="close">X</a>
+          <h2 class="text-centered">Mark as Busy</h2>
+          <form action="../includes/busy.php" method="post">
+            <div class="form-group desc">
+              <div class="checkbox">
+                <label>
+                  <input id="checkbox-busy" type="checkbox" name="busy" value="1"/ <?php echo $row_busy['busy'] == 1 ? 'checked' : '' ?>><i class="helper"></i>Mark as Busy
+                </label>
+                <br />
+                <label>
+                  Any problems assigned to you will be given the "pending" state until you accept them.
+                </label>
+              </div>
+            </div>
+            <div class="button__container">
+            <button class="button__load" style="margin-bottom:10px;" name='submit'>Save</button>
+        </div>
+        </form>
+    </div>
+  </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>

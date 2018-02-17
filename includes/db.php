@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "proteam";
+$password = "root";
 
 try {
     $con = new PDO("mysql:host=$servername;dbname=sc-web", $username, $password);

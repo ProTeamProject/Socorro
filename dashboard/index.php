@@ -50,18 +50,18 @@
       $stmt2->execute();
 
     } else if ($_SESSION['u_type'] == 'specialist') {
-      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_type.problem_type_name, Problem.state
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
     FROM Problem
-    INNER JOIN employee on Employee.Caller_ID = Problem.Caller_ID
-    INNER JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
-    INNER JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID
+    INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
+    INNER JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
+    INNER JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
    and Problem.Specialist_Account_ID = :uid
     ORDER BY Problem.Open_date desc";
       $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
     FROM Problem
-    INNER JOIN employee on Employee.Caller_ID = Problem.Caller_ID
-    INNER JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
-    INNER JOIN problem_type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+    INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
+    INNER JOIN Problem_status on Problem_Status.Problem_ID = Problem.Problem_ID
+    INNER JOIN Problem_type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
     and Problem.Specialist_Account_ID = :uid WHERE Problem.state != 'closed'
     ORDER BY Problem.Open_date asc";
 

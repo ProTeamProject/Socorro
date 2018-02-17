@@ -8,25 +8,17 @@
 
 <form action='phpscript' method="post">
 Problem_ID: <input type="int" name="Problem ID">
-<br>
 Operator_Account_ID: <input type="int" name="Operator Account ID"> <!-- this part can be auto ammended -->
-<br>
 Specialist_Account_ID: <input type="int" name="Specialist Account ID">
-<br>
 Caller_ID: <input type="text" name="Caller ID">
-<br>
 Problem_Desc: <input type="text" name ="Problem description">
-<br>
 Close_Date: <input type="date" name = "Closing Date">
-<br>
 Problem_Type_ID: <input type="int" name = "Problem Type ID">
-<br>
 State: <select>
   <option value="Open">open</option>
   <option value="Closed">closed</option>
   <option value="Pending">pending</option>
 </select>
-<br>
 Open_Date: <input type="date" name="Open Date">
 <?php
 

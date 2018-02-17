@@ -164,7 +164,7 @@ function increaseHeight(e){
 
 
 let json2 = json;
-populatePage(json, json_pending);
+
 $(".problems__inner__dash > a .closed").hide();
 $(".dashboard__checkbox__container :checkbox").change(function() {
   console.log("changed");
@@ -175,6 +175,7 @@ $(".dashboard__checkbox__container :checkbox").change(function() {
     });
 });
 
+/*
 function populatePage(json, json_pending) {
   for(var k in json) {
     var element = $('<a class="' + json[k]['problem_status'] + '"href="/problem"><div class="problem__entry h-padding-small ' + json[k]['problem_status'] + '" id="problem_27"><p class="pid">' + '#' + json[k]['problem_id'] + '</p><p class="caller__name">' + json[k]['caller_name'] + '</p><p class="date__created">' + json[k]['date_submitted'] + '</p><p class="updated">' + json[k]['last_updated'] + '</p><p class="problem__type">' + json[k]['problem_type'] + '</p><div class="status__' + json[k]['problem_status'] + '"><p class="status__text">' + json[k]['problem_status'] + '</p></div></div></a>');
@@ -185,6 +186,7 @@ function populatePage(json, json_pending) {
     $(".problems__inner__dash__pending").append(element2);
   }
 }
+*/
 
 function populateSearch(json) {
   $(".problems__inner__search").append(element);

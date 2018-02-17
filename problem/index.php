@@ -1,4 +1,14 @@
-<?php include_once 'includes/db.php'; ?>
+<?php
+
+  include_once '../includes/db.php';
+  session_start();
+
+  if (!isset($_SESSION['u_id'])) {
+    header("Location: ../index.php");
+    exit();
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +17,7 @@
 </head>
 <body>
   <?php
-echo 'blahblah';
+echo 'Problem ID: #';
 $getId = $_GET['id'];
 echo $getId;
   ?>

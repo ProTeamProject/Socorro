@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
           $_SESSION['u_name'] = $row['Name'];
           $_SESSION['u_username'] = $row['Username'];
           $_SESSION['u_type'] = $row['Job_Type'];
-          header("Location: ../dummy_dashboard.php?login=success");
+          header("Location: ../dashboard/index.php?login=success");
           exit();
         }
       }

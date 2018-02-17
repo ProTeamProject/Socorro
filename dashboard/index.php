@@ -28,8 +28,7 @@
   <?php
 
   if (isset($_SESSION['u_type'])) {
-    //change to operator
-    if ($_SESSION['u_type'] == 'specialist') {
+    if ($_SESSION['u_type'] == 'operator') {
       $sql = "SELECT problem.Problem_ID, employee.Caller_Name, problem.Open_date, problem_status.Status_Date, problem_type.problem_type_name, problem.state
     FROM Problem
     LEFT JOIN employee on employee.Caller_ID = problem.Caller_ID

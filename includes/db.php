@@ -1,17 +1,14 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "root";
 
-// Initialise credentials
-$mysql_host = 'localhost';
-$mysql_user = 'root';
-$mysql_pass = 'root';
-$mysql_db = 'sc-web';
-
-// Create connection
-$con = mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
-
-// Check the connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-
+try {
+    $con = new PDO("mysql:host=$servername;dbname=sc-web", $username, $password);
+    // set the PDO error mode to exception
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+catch(PDOException $e)
+    {
+    }
 ?>

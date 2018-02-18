@@ -4,7 +4,7 @@
       <h1 class="search__title animated fadeInUp">Search Results for <strong><span class="notranslate" id="searchterm"></span></strong></h1>
 
       <div class="problems animated fadeIn" >
-        
+
         <div class="problems__inner" id="search-results">
         </div>
       </div>
@@ -15,7 +15,7 @@
 </div>
 <header class="header">
   <div class="header__inner h-padding-xlarge">
-    <a href="../operator/index.html" class="logo">
+    <a href="../index.php" class="logo">
       <img class="logo__img" src="../img/logo.png" />
     </a>
     <div class="btn__new">

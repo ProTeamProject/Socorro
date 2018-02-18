@@ -31,17 +31,17 @@
   if (isset($_SESSION['u_type'])) {
     //change to operator
     if ($_SESSION['u_type'] == 'operator') {
-      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.Problem_Type_Name, Problem.state
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, MAX(Problem_Status.Status_Date) As Status_Date, Problem_Type.Problem_Type_Name, Problem.state
     FROM Problem
     LEFT JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
     LEFT JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
-    LEFT JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID ORDER BY Problem.Open_date desc";
-      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.Problem_Type_Name, Problem.state
+    LEFT JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID GROUP BY Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Type.Problem_Type_Name, Problem.state ORDER BY Problem.Open_date desc ";
+      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, MAX(Problem_Status.Status_Date) As Status_Date, Problem_Type.Problem_Type_Name, Problem.state
     FROM Problem
     LEFT JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
     LEFT JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
     LEFT JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
-    WHERE Problem.state != 'closed' ORDER BY Problem.Open_date asc";
+    WHERE Problem.state != 'closed' GROUP BY Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Type.Problem_Type_Name, Problem.state ORDER BY Problem.Open_date asc";
 
       $stmt = $con->prepare($sql);
       $stmt->bindParam(':output', $output, PDO::PARAM_INT);
@@ -50,27 +50,9 @@
       $stmt2->execute();
 
     } else if ($_SESSION['u_type'] == 'specialist') {
-      //check if Busy
-      $sql_busy = "SELECT busy FROM Specialist WHERE Account_ID = :uid";
-      $stmt = $con->prepare($sql_busy);
-      $stmt->bindParam(':uid', $uid);
-      $stmt->execute();
-      $row_busy = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
-    FROM Problem
-    INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
-    INNER JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
-    INNER JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
-   and Problem.Specialist_Account_ID = :uid
-    ORDER BY Problem.Open_date desc";
-      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.problem_type_name, Problem.state
-    FROM Problem
-    INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
-    INNER JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
-    INNER JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
-    and Problem.Specialist_Account_ID = :uid WHERE Problem.state != 'closed'
-    ORDER BY Problem.Open_date asc";
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, MAX(Problem_Status.Status_Date) As Status_Date, Problem_Type.problem_type_name, Problem.state FROM Problem INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID INNER JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID INNER JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID and Problem.Specialist_Account_ID = :uid GROUP BY Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Type.Problem_Type_Name, Problem.state ORDER BY Problem.Open_date desc";
+      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, MAX(Problem_Status.Status_Date) As Status_Date, Problem_Type.problem_type_name, Problem.state FROM Problem INNER JOIN Employee on Employee.Caller_ID = Problem.Caller_ID INNER JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID INNER JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID and Problem.Specialist_Account_ID = :uid WHERE Problem.State != 'closed' GROUP BY Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Type.Problem_Type_Name, Problem.state ORDER BY Problem.Open_date asc";
 
     $stmt = $con->prepare($sql);
     $stmt->bindParam(':uid', $uid);
@@ -169,7 +151,7 @@
             <div class="sk-circle11 sk-circle"></div>
             <div class="sk-circle12 sk-circle"></div>
           </div>
-          <button class="button__load" id="button-load" onclick="loadMore()">Load More</button>
+          <!--<button class="button__load" id="button-load" onclick="loadMore()">Load More</button>-->
         </div>
         <footer class="footer v-padding-xlarge">
           <p>
@@ -239,7 +221,7 @@
             <div class="sk-circle11 sk-circle"></div>
             <div class="sk-circle12 sk-circle"></div>
           </div>
-          <button class="button__load" id="button-load" onclick="loadMore()">Load More</button>
+          <!--<button class="button__load" id="button-load" onclick="loadMore()">Load More</button>-->
         </div>
         <footer class="footer v-padding-xlarge">
           <p>
@@ -262,28 +244,7 @@
 
 
   </main>
-  <div id="openModal" class="modalDialog">
-    <div>
-      <a href="#close" title="Close" class="close">X</a>
-          <h2 class="text-centered">Mark as Busy</h2>
-          <form action="../includes/busy.php" method="post">
-            <div class="form-group desc">
-              <div class="checkbox">
-                <label>
-                  <input id="checkbox-busy" type="checkbox" name="busy" value="1"/ <?php echo $row_busy['busy'] == 1 ? 'checked' : '' ?>><i class="helper"></i>Mark as Busy
-                </label>
-                <br />
-                <label>
-                  Any problems assigned to you will be given the "pending" state until you accept them.
-                </label>
-              </div>
-            </div>
-            <div class="button__container">
-            <button class="button__load" style="margin-bottom:10px;" name='submit'>Save</button>
-        </div>
-        </form>
-    </div>
-  </div>
+  <?php include '../includes/busy_modal.php' ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>

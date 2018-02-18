@@ -3,6 +3,7 @@ var acc = document.getElementsByClassName("accordion");
 var i;
 var pagetype;
 
+
 var json = (function() {
         var json = null;
         $.ajax({
@@ -246,14 +247,23 @@ function showSearch() {
   var cancel = document.getElementById("cancelsearch");
   var output = document.getElementById("searchterm");
   output.innerHTML = term;
+  $.ajax({
+  	type: 'GET',
+  	url: '../includes/search.php',
+  	data: 'txt=' + term,
+  	success: function(data){
+  		$("#search-results").html(data);
+  	}
+  });
+
   //hide/show dashboard and search
   if (term.length==0) {
-    closeNav()
+    closeNav();
   } else {
     page.style.display = "none";
     search.style.display = "block";
     cancel.style.display = "block";
-    openNav()
+    openNav();
   }
 }
 

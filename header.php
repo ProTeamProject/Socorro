@@ -3,33 +3,12 @@
     <section class="search__results h-padding-xlarge animated" id="searchresults">
       <h1 class="search__title animated fadeInUp">Search Results for <strong><span class="notranslate" id="searchterm"></span></strong></h1>
 
-      <div class="problems animated fadeIn">
-        <div class="problem__titles h-padding-small ">
-          <p>
-            Problem ID
-          </p>
-          <p>
-            Caller Name
-          </p>
-          <p>
-            Date Submitted
-          </p>
-          <p>
-            Last Updated
-          </p>
-          <p>
-            Problem Type
-          </p>
-          <p>
-            State
-          </p>
-        </div>
-        <div class="problems__inner">
+      <div class="problems animated fadeIn" >
+        
+        <div class="problems__inner" id="search-results">
         </div>
       </div>
-      <div class="button__container v-padding-mid">
-        <button class="button__load">Load More</button>
-      </div>
+
     </section>
   </div>
 
@@ -85,7 +64,7 @@
 </div>
   <nav class="nav v-padding-xsmall h-padding-xlarge">
     <div class="search__area">
-      <input autocomplete="off" id="search" oninput="showSearch()" type="text" name="search" placeholder="&#xf002; Search...">
+      <input autocomplete="off" id="search" oninput="showSearch()" type="text" name="search" placeholder="&#xf002; Search for ID, Caller Name or Problem Type...">
       <div onclick="clearSearch()" class="cancel__search" id="cancelsearch">
         <i class="fa fa-times" aria-hidden="true"></i>
       </div>

@@ -291,6 +291,15 @@ $("#checkbox-create-problem-type").on('change', function() {
     }
 });
 
+$("#checkbox-solved-status").on('change', function() {
+    if (document.getElementById('enter-solution').style.display == 'none'){
+
+        document.getElementById('enter-solution').style.display = 'block';
+    } else {
+        document.getElementById('enter-solution').style.display = 'none';
+    }
+});
+
 
 function clearSearch() {
   document.getElementById("search").value = "";

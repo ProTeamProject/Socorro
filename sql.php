@@ -72,7 +72,7 @@ $sqlHardwareOverview = "SELECT count(problem_type.software_or_Hardware) as 'Numb
 FROM problem_type
 INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
 WHERE problem_type.Software_Or_Hardware = 7 and
-problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'" // number of hardware problems for specific month
+problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // number of hardware problems for specific month
 
 $stmtHardwareOverview = $con->prepare($sqlHardwareOverview);
 $stmtHardwareOverview->execute();
@@ -111,6 +111,10 @@ var arrSoftware = <?= json_encode($resultSoftware); ?>;
 console.log(arrSoftware);
 var arrHardware = <?= json_encode($resultHardware); ?>;
 console.log(arrHardware);
+var arrSoftwareOverview = <?= json_encode($resultSoftwareOverview); ?>;
+console.log(arrSoftwareOverview);
+var arrHardwareOverview = <?= json_encode($resultHardwareOverview); ?>;
+console.log(arrHardwareOverview);
 
 
 </script>

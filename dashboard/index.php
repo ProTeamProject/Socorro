@@ -31,16 +31,16 @@
   if (isset($_SESSION['u_type'])) {
     //change to operator
     if ($_SESSION['u_type'] == 'operator') {
-      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_type.problem_type_name, Problem.state
+      $sql = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.Problem_Type_Name, Problem.state
     FROM Problem
-    LEFT JOIN employee on Employee.Caller_ID = Problem.Caller_ID
-    LEFT JOIN problem_status on Problem_status.Problem_ID = Problem.Problem_ID
-    LEFT JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID ORDER BY Problem.Open_date desc";
-      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_status.Status_Date, Problem_Type.problem_type_name, Problem.state
+    LEFT JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
+    LEFT JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
+    LEFT JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID ORDER BY Problem.Open_date desc";
+      $sql2 = "SELECT Problem.Problem_ID, Employee.Caller_Name, Problem.Open_date, Problem_Status.Status_Date, Problem_Type.Problem_Type_Name, Problem.state
     FROM Problem
-    LEFT JOIN employee on Employee.Caller_ID = Problem.Caller_ID
-    LEFT JOIN problem_status on Problem_Status.Problem_ID = Problem.Problem_ID
-    LEFT JOIN problem_type on Problem_type.Problem_Type_ID = Problem.Problem_Type_ID
+    LEFT JOIN Employee on Employee.Caller_ID = Problem.Caller_ID
+    LEFT JOIN Problem_Status on Problem_Status.Problem_ID = Problem.Problem_ID
+    LEFT JOIN Problem_Type on Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
     WHERE Problem.state != 'closed' ORDER BY Problem.Open_date asc";
 
       $stmt = $con->prepare($sql);

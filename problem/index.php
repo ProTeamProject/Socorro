@@ -234,7 +234,7 @@
 
                 while ($row_status = $stmt_status->fetch(PDO::FETCH_ASSOC)) {
                   echo '<div class="status"><p>' . date('jS F Y H:i', strtotime($row_status['Status_Date'])) . '</p>
-                  <p class="status__type">' . $row_status['Status_Type'] . '</p>
+                  <p class="status__type"><span style="font-family: FontAwesome;">' . $row_status['Status_Type'] . '</span></p>
                   <p class="desc">' . $row_status['Comment'] . '</p><p>' . $row_status['Name'] . '</p></div>';
                 }
 

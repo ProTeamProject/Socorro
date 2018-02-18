@@ -57,7 +57,7 @@
 <option value="Charles Dickins"  data-job = "Distribution Manager" data-id="129" data-dept="IT" data-ext="23572">Ext 87564</option>
     </datalist>
 
-<button id="button" class="button__load"><span>Retrieve User Info</span></button>
+<!--<button id="button" class="button__load"><span>Retrieve User Info</span></button>-->
 <div class="caller__info__output" style="height:30px;">
 
 </div>

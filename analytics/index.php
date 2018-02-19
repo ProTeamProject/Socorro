@@ -46,7 +46,7 @@ if (!isset($_SESSION['u_id'])) {
   }
 
 
-  $sql9 = "SELECT state,count(state) as count FROM Problem WHERE state IN ('open','pending','closed') GROUP BY state"; // total, closed, open and pending Problems
+  $sql9 = "SELECT State,count(state) as count FROM Problem WHERE state IN ('open','pending','closed') GROUP BY State"; // total, closed, open and pending Problems
   $stmt9 = $con->prepare($sql9);
   $stmt9->execute();
   $result9 = $stmt9->fetchAll(PDO::FETCH_ASSOC);
@@ -77,7 +77,7 @@ if (!isset($_SESSION['u_id'])) {
   $stmt3->execute();
   $result3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql7 = "SELECT Average_Time, Number_Solved, Problems_Assigned, Busy FROM specialist
+  $sql7 = "SELECT Average_Time, Number_Solved, Problems_Assigned, Busy FROM Specialist
   WHERE Account_ID = 2"; //Breakdown of individual specialist
   $stmt7 = $con->prepare($sql7);
   $stmt7->execute();

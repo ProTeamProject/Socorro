@@ -1,8 +1,13 @@
 <?php
+
+// Connects to the database
+
+//Server credentials
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "proteam";
 
+//create connection
 try {
     $con = new PDO("mysql:host=$servername;dbname=sc-web", $username, $password);
     // set the PDO error mode to exception

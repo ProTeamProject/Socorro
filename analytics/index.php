@@ -1,7 +1,9 @@
 <?php include_once '../includes/db.php';
 
+//Start the session
 session_start();
 
+//Check if user is logged in
 if (!isset($_SESSION['u_id'])) {
   header("Location: ../index.php");
   exit();
@@ -25,6 +27,7 @@ if (!isset($_SESSION['u_id'])) {
 
 <body>
   <?php
+  // Queries the database for problem analytics
   include '../includes/db.php';
   $sql6 = "SELECT TIMESTAMPDIFF(second, Open_Date, Close_Date) AS DateDiff FROM Problem WHERE Close_Date IS NOT NULL"; // works out time in seconds for problem completion
   $stmt6 = $con->prepare($sql6);
@@ -281,7 +284,7 @@ if (!isset($_SESSION['u_id'])) {
 <?php include '../header.php' ?>
   <main id="panel" class="main__section">
     <section id="new" class="h-padding-xlarge animated fadeIn">
-      <h2 class="animated fadeInUp"><a class="back__button" href="../operator/index.html">Back to Dashboard</a></h2>
+      <h2 class="animated fadeInUp"><a class="back__button" href="../dashboard">Back to Dashboard</a></h2>
       <h1 class="animated fadeInUp">Problem Analytics</h1>
       <div class="month_picker">
         <button class="button__load">

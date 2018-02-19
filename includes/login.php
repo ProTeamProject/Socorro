@@ -1,5 +1,7 @@
 <?php
 
+// Allows users access to main website via login system when correct credentials are entered
+
 session_start();
 
 // Submit button pressed

@@ -71,6 +71,9 @@ if (isset($_POST['submit'])) {
 
   }
 
+  //Update specialist analytics
+    //Retrieve number solved, average time
+
   //return to page before you added status
   header('Location: ' . $_SERVER['HTTP_REFERER']);
   exit();

@@ -13,13 +13,29 @@
   </div>
 
 </div>
+<div id="mobileMenu" class="mobile-menu">
+  <a href="javascript:void(0)" class="menuClosebtn" onclick="closeMobileMenu()">&times;</a>
+  <div class="mobile-menu-content">
+    <?php
+
+    if ($_SESSION['u_type'] == 'operator') {
+            echo '<a href="../new"><i class="fa fa-plus-square" aria-hidden="true"></i> New Problem</a>';
+          } else if ($_SESSION['u_type'] == 'specialist') {
+            echo '<a href="#openModal"><i class="fa fa-hourglass" aria-hidden="true"></i>Mark as Busy</a>';
+          }
+     ?>
+    
+    <a href="../analytics"><i class="fa fa-pie-chart" aria-hidden="true"></i> Analytics</a>
+    <a href="../includes/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
+  </div>
+</div>
 <header class="header">
   <div class="header__inner h-padding-xlarge">
     <a href="../index.php" class="logo">
       <img class="logo__img" src="../img/logo.png" />
     </a>
     <div class="btn__new">
-      <button class="toggle-button" onclick="closeNav();">☰</button>
+      <button class="toggle-button" onclick="openMobileMenu();">☰</button>
       <div class="menu__desktop">
         <?php
 
@@ -71,28 +87,13 @@
     </div>
   </nav>
 </header>
-<nav id="menu" class="menu slideout-menu slideout-menu-right">
-    <section class="menu-section">
-      <ul class="menu-section-list">
-        <li><a href="../new"><i class="fa fa-plus-square" aria-hidden="true"></i> New Problem</a></li>
-        <li><a><i class="fa fa-language" aria-hidden="true"></i> Change Language</a></li>
-        <li><a href="../analytics" ><i class="fa fa-pie-chart" aria-hidden="true"></i> Analytics</a></li>
-        <li><a href="../" >  <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+<script>
+function openMobileMenu() {
+    document.getElementById("mobileMenu").style.width = "100%";
+}
 
-      </ul>
-    </section>
-  </nav>
-  <script>
-  var slideout = new Slideout({
-    'panel': document.getElementById('panel'),
-    'menu': document.getElementById('menu'),
-    'padding': 256,
-    'tolerance': 70,
-    'touch': false
-  });
-  // Toggle button
-  document.querySelector('.toggle-button').addEventListener('click', function() {
-    slideout.toggle();
-  });
+function closeMobileMenu() {
+    document.getElementById("mobileMenu").style.width = "0%";
+}
 
-  </script>
+</script>

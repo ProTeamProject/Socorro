@@ -389,16 +389,12 @@ if (!isset($_SESSION['u_id'])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
 <script>
 var arrSoftwareLabels = <?php echo json_encode($arrSoftwareLabels); ?>;
-console.log(arrSoftwareLabels);
 var arrSoftwareData = <?php echo json_encode($arrSoftwareData, JSON_NUMERIC_CHECK); ?>;
-console.log(arrSoftwareData);
 var arrHardwareLabels = <?php echo json_encode($arrHardwareLabels); ?>;
-console.log(arrHardwareLabels);
 var arrHardwareData = <?php echo json_encode($arrHardwareData, JSON_NUMERIC_CHECK); ?>;
-console.log(arrHardwareData);
 var arrSoftwareOverview = <?php echo json_encode($arrSWOverview, JSON_NUMERIC_CHECK); ?>;
 console.log(arrSoftwareOverview);
 var arrHardwareOverview = <?php echo json_encode($arrHWOverview, JSON_NUMERIC_CHECK); ?>;

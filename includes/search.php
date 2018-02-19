@@ -18,7 +18,7 @@ function search($text) {
   $resultCheck = $stmt->rowCount();
   // Check if there are results
   if ($resultCheck < 1) {
-    echo '<h2 style="color:white;">
+    echo '<h2 style="color:black;">
     No Results Found
     </h2>';
   } else {

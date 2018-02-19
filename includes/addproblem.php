@@ -144,8 +144,6 @@ if (isset($_POST['submit'])) {
   //live stuff
   //output full list of specialists with their problem types listed
   //query database to check if serial numbers are valid
-  //output list of problem types, give there values as their id's
-
   //hide problem type when new problem type selected
 
 }

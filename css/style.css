@@ -68,7 +68,11 @@ a.back__button:hover {
   background-attachment: fixed;
   background-position: center;
   padding-top: 10px;
+  background-color: #ebebeb;
+  border-bottom: 1px solid #dbd4d4;
 }
+
+
 
 button.button__main {
   border: none;
@@ -185,7 +189,7 @@ button.toggle-button {
 }
 
 .nav {
-
+background-color: #ebebeb;
 
 }
 
@@ -263,8 +267,8 @@ transform: translate(0px, -12px) rotate(-45deg);
 
 .header {
 
-  color: white;
-
+  color: #417bbc;
+  position: relative;
   z-index: 2;
   top: 0px;
   width: 100%;
@@ -448,6 +452,7 @@ body {top: 0px!important;}
   border-color: #494949;
   border-width: 1px;
   border-style: solid;
+  border-radius: 5px;
   transition: border-color .15s ease-in-out;
   transition: background-color .15s ease-in-out;
 }
@@ -913,7 +918,7 @@ div.panel {
     margin: 10% auto;
     padding: 5px 20px 13px 20px;
     border-radius: 10px;
-    background: rgba(246, 239, 255, 1);
+    background: white;
 }
 .close {
     background: #606061;
@@ -1146,6 +1151,7 @@ div.panel {
 input[type="radio"][name="tabs"] {
   position: absolute;
   z-index: -1;
+  display: none;
 }
 input[type="radio"][name="tabs"]:checked + .tab-label-content label {
   color: black;
@@ -1180,17 +1186,22 @@ input[type="radio"][name="tabs"]:first-of-type:checked ~ .slide {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
-  height: 56px;
+  height: 46px;
   -webkit-transition: color 0.2s ease;
   transition: color 0.2s ease;
   -webkit-transition: background 0.2s ease-in-out;
   transition: background 0.2s ease-in-out;
   width: 100%;
   color: black;
+  border-radius: 5px 5px 0px 0px;
+  border-top: 1px solid #AAA;
+  border-left: 1px solid #AAA;
+  border-right: 1px solid #AAA;
+  border-bottom: 4px solid #dbd4d4;
 }
 
 .slide {
-  background: #1ba5ce;
+  background: #417bbc;
   width: calc(100% / 2);
   height: 4px;
   position: absolute;
@@ -1335,18 +1346,57 @@ font-size: 15px;
 div#myNav.overlay {
   overflow-y: auto;
   height: 0%;
-}
-
-.#caller-info {
 
 }
 
-.caller__list {
-
+.mobile-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
 }
 
-.caller__list__entry {
+.mobile-menu-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
 
+.mobile-menu a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.mobile-menu a:hover, .mobile-menu a:focus {
+    color: #f1f1f1;
+}
+
+.mobile-menu .menuClosebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .mobile-menu a {font-size: 20px}
+  .mobile-menu .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
 }
 
 .sk-fading-circle {

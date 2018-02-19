@@ -4,33 +4,7 @@ var i;
 var pagetype;
 
 
-var json = (function() {
-        var json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': "../data.json",
-            'dataType': "json",
-            'success': function (data) {
-                json = data;
-            }
-        });
-        return json;
-    })();
 
-    var json_pending = (function() {
-            var json = null;
-            $.ajax({
-                'async': false,
-                'global': false,
-                'url': "../data_pending.json",
-                'dataType': "json",
-                'success': function (data) {
-                    json = data;
-                }
-            });
-            return json;
-        })();
 onload = function getPage() {
   if (document.getElementById("dashboard") != null) {
     pagetype = "dash";
@@ -160,13 +134,11 @@ function increaseHeight(e){
     }
 
 
-let json2 = json;
+
 
 $(".problems__inner__dash > a .closed").hide();
 $(".dashboard__checkbox__container :checkbox").change(function() {
-  console.log("changed");
     $(".problems__inner__dash > a").hide();
-    console.log($(".dashboard__checkbox__container :checkbox:checked"));
     $(".dashboard__checkbox__container :checkbox:checked").each(function() {
         $(".problems__inner__dash ." + $(this).val()).show();
     });
@@ -185,9 +157,7 @@ function populatePage(json, json_pending) {
 }
 */
 
-function populateSearch(json) {
-  $(".problems__inner__search").append(element);
-}
+
 
 function loadMore() {
   //show load icon with delay
@@ -197,7 +167,6 @@ function loadMore() {
 }
 
 function showPageContent() {
-  populatePage(json2);
   document.getElementById("button-load").style.display = "block";
   document.getElementById("loader").style.display = "none";
 }

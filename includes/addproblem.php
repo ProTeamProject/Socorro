@@ -1,5 +1,6 @@
 <?php
 
+// Allows operators to add new problems from the new problem page
 session_start();
 
 if (isset($_POST['submit'])) {

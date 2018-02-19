@@ -1,5 +1,7 @@
 <?php
 
+// Adds a new status to a specific problem id
+
 session_start();
 
 if (isset($_POST['submit'])) {
@@ -15,11 +17,14 @@ if (isset($_POST['submit'])) {
   $solved = $_POST['solved'];
   $solution = $_POST['solution'];
 
+  // If status type is a call
   if ($type == 'Call') {
+    // Insert as call
     $sql = "INSERT INTO Problem_Status (Problem_ID, Status_ID, Comment, Account_ID, Status_Date, Caller_ID) VALUES (:id, 1, :comment, :uid, :status_date, :cid)";
     $stmt = $con->prepare($sql);
     $stmt->bindParam(':cid', $cid);
   } else {
+    // Insert as note
     $sql = "INSERT INTO Problem_Status (Problem_ID, Status_ID, Comment, Account_ID, Status_Date, Caller_ID) VALUES (:id, 5, :comment, :uid, :status_date, 0)";
     $stmt = $con->prepare($sql);
   }
@@ -32,7 +37,7 @@ if (isset($_POST['submit'])) {
   $stmt->execute();
 
 
-
+  // If problem is solved
   if ($solved == 1) {
     //Add solution
     $sql_solution = "INSERT INTO Solution (Solution_Desc, Solution_Counter) VALUES (:solution, 1)";
@@ -53,9 +58,6 @@ if (isset($_POST['submit'])) {
     $stmt3->bindParam(':date_close', $date_close);
     $stmt3->bindParam(':pid', $pid);
     $stmt3->execute();
-
-    //Update specialist analytics
-    //Retrieve number solved, average time
 
     //Post closed status
     $sql = "INSERT INTO Problem_Status (Problem_ID, Status_ID, Comment, Account_ID, Status_Date, Caller_ID) VALUES (:id, 3, :comment, :uid, :status_date, 0)";

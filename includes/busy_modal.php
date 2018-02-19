@@ -1,11 +1,16 @@
-<?php //check if Busy
+<?php
+
+// Checks if the specialist is busy
 
 include '../includes/db.php';
 
+// Retrieve user id
 $uid = $_SESSION['u_id'];
 
+// If user is a specialist
 if ($_SESSION['u_type'] == 'specialist') {
 
+// Set user busy state
 $sql_busy = "SELECT Busy FROM Specialist WHERE Account_ID = :uid";
 $stmt = $con->prepare($sql_busy);
 $stmt->bindParam(':uid', $uid);

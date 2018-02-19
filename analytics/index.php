@@ -52,7 +52,7 @@ if (!isset($_SESSION['u_id'])) {
   $result9 = $stmt9->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sql4 = "SELECT count(problem_ID) FROM problem WHERE Open_Date BETWEEN $startDate and $endDate"; // Total problems for selected month
+  $sql4 = "SELECT count(problem_ID) FROM problem WHERE Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // Total problems for selected month
   $stmt4 = $con->prepare($sql4);
   $stmt4->execute();
   $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
@@ -62,7 +62,7 @@ if (!isset($_SESSION['u_id'])) {
   FROM problem_type
   INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
   WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN $startDate and $endDate"; //  number of software problems for specific month
+  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; //  number of software problems for specific month
   $stmt5 = $con->prepare($sql5);
   $stmt5->execute();
   $result5 = $stmt5->fetchAll(PDO::FETCH_ASSOC);
@@ -72,7 +72,7 @@ if (!isset($_SESSION['u_id'])) {
   FROM problem_type
   INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
   WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN $startDate and $endDate"; // number of hardware problems for specific month
+  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // number of hardware problems for specific month
   $stmt3 = $con->prepare($sql3);
   $stmt3->execute();
   $result3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
@@ -86,14 +86,14 @@ if (!isset($_SESSION['u_id'])) {
 
   $sql8 = "SELECT sum(TIMESTAMPDIFF(hour, problem.Open_Date, problem.Close_Date))/ count(problem_type.software_or_Hardware) AS averageTime
   FROM Problem INNER JOIN problem_type ON problem_type.Problem_Type_ID = problem.Problem_Type_ID WHERE problem.Close_Date IS NOT NULL
-  and problem_type.Software_Or_Hardware = 6 and problem.Open_Date BETWEEN $startDate and $endDate"; // average time to complete
+  and problem_type.Software_Or_Hardware = 6 and problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
   $stmt8 = $con->prepare($sql8);
   $stmt8->execute();
   $result8 = $stmt8->fetchAll(PDO::FETCH_ASSOC);
 
   $sql15 = "SELECT sum(TIMESTAMPDIFF(hour, problem.Open_Date, problem.Close_Date))/ count(problem_type.software_or_Hardware) AS averageTime
   FROM Problem INNER JOIN problem_type ON problem_type.Problem_Type_ID = problem.Problem_Type_ID WHERE problem.Close_Date IS NOT NULL
-  and problem_type.Software_Or_Hardware = 7 and problem.Open_Date BETWEEN $startDate and $endDate"; // average time to complete
+  and problem_type.Software_Or_Hardware = 7 and problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
   $stmt15 = $con->prepare($sql15);
   $stmt15->execute();
   $result15 = $stmt15->fetchAll(PDO::FETCH_ASSOC);
@@ -258,7 +258,7 @@ if (!isset($_SESSION['u_id'])) {
   INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
   WHERE Problem_Type.Software_Or_Hardware = 6 and Problem_Type.Parent_Problem_ID
   IS NOT NULL and Problem.Open_Date
-  BETWEEN $startDate and $endDate
+  BETWEEN '2017/10/01' and '2017/10/31'
   GROUP BY Problem.Problem_Type_ID";//breakdown of software problems
   $stmt = $con->prepare($sql);
   $stmt->execute();
@@ -271,7 +271,7 @@ if (!isset($_SESSION['u_id'])) {
   INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
   WHERE problem_type.Software_Or_Hardware = 7 and
   problem_type.Parent_Problem_ID IS NOT NULL and
-  problem.Open_Date BETWEEN $startDate and $endDate
+  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
   group by problem.Problem_Type_ID"; //breakdown of hardware problems
   $stmt2 = $con ->prepare($sql2);
   $stmt2->execute();

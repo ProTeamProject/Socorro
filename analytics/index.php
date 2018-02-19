@@ -1,7 +1,9 @@
 <?php include_once '../includes/db.php';
 
+//Start the session
 session_start();
 
+//Check if user is logged in
 if (!isset($_SESSION['u_id'])) {
   header("Location: ../index.php");
   exit();
@@ -25,8 +27,9 @@ if (!isset($_SESSION['u_id'])) {
 
 <body>
   <?php
+  // Queries the database for Problem analytics
   include '../includes/db.php';
-  $sql6 = "SELECT TIMESTAMPDIFF(second, Open_Date, Close_Date) AS DateDiff FROM Problem WHERE Close_Date IS NOT NULL"; // works out time in seconds for problem completion
+  $sql6 = "SELECT TIMESTAMPDIFF(second, Open_Date, Close_Date) AS DateDiff FROM Problem WHERE Close_Date IS NOT NULL"; // works out time in seconds for Problem completion
   $stmt6 = $con->prepare($sql6);
   $stmt6->execute();
   $count = $stmt6->rowCount();
@@ -43,33 +46,33 @@ if (!isset($_SESSION['u_id'])) {
   }
 
 
-  $sql9 = "SELECT state,count(state) as count FROM Problem WHERE state IN ('open','pending','closed') GROUP BY state"; // total, closed, open and pending problems
+  $sql9 = "SELECT state,count(state) as count FROM Problem WHERE state IN ('open','pending','closed') GROUP BY state"; // total, closed, open and pending Problems
   $stmt9 = $con->prepare($sql9);
   $stmt9->execute();
   $result9 = $stmt9->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sql4 = "SELECT count(problem_ID) FROM problem WHERE Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // Total problems for selected month
+  $sql4 = "SELECT count(Problem_ID) FROM Problem WHERE Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // Total Problems for selected month
   $stmt4 = $con->prepare($sql4);
   $stmt4->execute();
   $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sql5 = "SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; //  number of software problems for specific month
+  $sql5 = "SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; //  number of software Problems for specific month
   $stmt5 = $con->prepare($sql5);
   $stmt5->execute();
   $result5 = $stmt5->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sql3 = "SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // number of hardware problems for specific month
+  $sql3 = "SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // number of hardware Problems for specific month
   $stmt3 = $con->prepare($sql3);
   $stmt3->execute();
   $result3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
@@ -81,170 +84,170 @@ if (!isset($_SESSION['u_id'])) {
   $result7 = $stmt7->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sql8 = "SELECT sum(TIMESTAMPDIFF(hour, problem.Open_Date, problem.Close_Date))/ count(problem_type.software_or_Hardware) AS averageTime
-  FROM Problem INNER JOIN problem_type ON problem_type.Problem_Type_ID = problem.Problem_Type_ID WHERE problem.Close_Date IS NOT NULL
-  and problem_type.Software_Or_Hardware = 6 and problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
+  $sql8 = "SELECT sum(TIMESTAMPDIFF(hour, Problem.Open_Date, Problem.Close_Date))/ count(Problem_Type.Software_Or_Hardware) AS averageTime
+  FROM Problem INNER JOIN Problem_Type ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID WHERE Problem.Close_Date IS NOT NULL
+  and Problem_Type.Software_Or_Hardware = 6 and Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
   $stmt8 = $con->prepare($sql8);
   $stmt8->execute();
   $result8 = $stmt8->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql15 = "SELECT sum(TIMESTAMPDIFF(hour, problem.Open_Date, problem.Close_Date))/ count(problem_type.software_or_Hardware) AS averageTime
-  FROM Problem INNER JOIN problem_type ON problem_type.Problem_Type_ID = problem.Problem_Type_ID WHERE problem.Close_Date IS NOT NULL
-  and problem_type.Software_Or_Hardware = 7 and problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
+  $sql15 = "SELECT sum(TIMESTAMPDIFF(hour, Problem.Open_Date, Problem.Close_Date))/ count(Problem_Type.Software_Or_Hardware) AS averageTime
+  FROM Problem INNER JOIN Problem_Type ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID WHERE Problem.Close_Date IS NOT NULL
+  and Problem_Type.Software_Or_Hardware = 7 and Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'"; // average time to complete
   $stmt15 = $con->prepare($sql15);
   $stmt15->execute();
   $result15 = $stmt15->fetchAll(PDO::FETCH_ASSOC);
 
   $startDate = date('2017/m/01');
   $endDate = date('2017/m/t');
-  $sqlSoftwareOverview = "SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/01/01' and '2017/01/31'
+  $sqlSoftwareOverview = "SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/01/01' and '2017/01/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/02/01' and '2017/02/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/02/01' and '2017/02/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/03/01' and '2017/03/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/03/01' and '2017/03/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/04/01' and '2017/04/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/04/01' and '2017/04/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/05/01' and '2017/05/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/05/01' and '2017/05/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/06/01' and '2017/06/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/06/01' and '2017/06/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/07/01' and '2017/07/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/07/01' and '2017/07/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/08/01' and '2017/08/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/08/01' and '2017/08/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/09/01' and '2017/09/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/09/01' and '2017/09/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/11/01' and '2017/11/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/11/01' and '2017/11/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 6 and
-  problem.Open_Date BETWEEN '2017/12/01' and '2017/12/31'"; //  number of software problems for specific month
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 6 and
+  Problem.Open_Date BETWEEN '2017/12/01' and '2017/12/31'"; //  number of software Problems for specific month
   $stmtSoftwareOverview = $con->prepare($sqlSoftwareOverview);
   $stmtSoftwareOverview->execute();
   while($row = $stmtSoftwareOverview->fetch(PDO::FETCH_ASSOC)) {
       $arrSWOverview[] = $row['Number'];
   }
-  $sqlHardwareOverview = "SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/01/01' and '2017/01/31'
+  $sqlHardwareOverview = "SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/01/01' and '2017/01/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/02/01' and '2017/02/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/02/01' and '2017/02/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/03/01' and '2017/03/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/03/01' and '2017/03/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/04/01' and '2017/04/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/04/01' and '2017/04/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/05/01' and '2017/05/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/05/01' and '2017/05/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/06/01' and '2017/06/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/06/01' and '2017/06/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/07/01' and '2017/07/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/07/01' and '2017/07/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/08/01' and '2017/08/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/08/01' and '2017/08/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/09/01' and '2017/09/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/09/01' and '2017/09/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/11/01' and '2017/11/31'
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/11/01' and '2017/11/31'
   UNION ALL
-  SELECT count(problem_type.software_or_Hardware) as 'Number'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem.Open_Date BETWEEN '2017/12/01' and '2017/12/31'
-  "; // number of hardware problems for specific month
+  SELECT count(Problem_Type.Software_Or_Hardware) as 'Number'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem.Open_Date BETWEEN '2017/12/01' and '2017/12/31'
+  "; // number of hardware Problems for specific month
   $stmtHardwareOverview = $con->prepare($sqlHardwareOverview);
   $stmtHardwareOverview->execute();
   while($row = $stmtHardwareOverview->fetch(PDO::FETCH_ASSOC)) {
@@ -256,20 +259,20 @@ if (!isset($_SESSION['u_id'])) {
   WHERE Problem_Type.Software_Or_Hardware = 6 and Problem_Type.Parent_Problem_ID
   IS NOT NULL and Problem.Open_Date
   BETWEEN '2017/10/01' and '2017/10/31'
-  GROUP BY Problem.Problem_Type_ID";//breakdown of software problems
+  GROUP BY Problem.Problem_Type_ID";//breakdown of software Problems
   $stmt = $con->prepare($sql);
   $stmt->execute();
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $arrSoftwareLabels[] = $row['Software'];
     $arrSoftwareData[] = $row['Number_of_Problems'];
   }
-  $sql2 = "SELECT problem_type.Problem_Type_Name as 'Hardware', count(problem.Problem_Type_ID) as 'Number_of_Problems'
-  FROM problem_type
-  INNER JOIN problem ON problem_type.Problem_Type_ID = problem.Problem_Type_ID
-  WHERE problem_type.Software_Or_Hardware = 7 and
-  problem_type.Parent_Problem_ID IS NOT NULL and
-  problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
-  group by problem.Problem_Type_ID"; //breakdown of hardware problems
+  $sql2 = "SELECT Problem_Type.Problem_Type_Name as 'Hardware', count(Problem.Problem_Type_ID) as 'Number_of_Problems'
+  FROM Problem_Type
+  INNER JOIN Problem ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
+  WHERE Problem_Type.Software_Or_Hardware = 7 and
+  Problem_Type.Parent_Problem_ID IS NOT NULL and
+  Problem.Open_Date BETWEEN '2017/10/01' and '2017/10/31'
+  group by Problem.Problem_Type_ID"; //breakdown of hardware Problems
   $stmt2 = $con ->prepare($sql2);
   $stmt2->execute();
   while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
@@ -281,7 +284,7 @@ if (!isset($_SESSION['u_id'])) {
 <?php include '../header.php' ?>
   <main id="panel" class="main__section">
     <section id="new" class="h-padding-xlarge animated fadeIn">
-      <h2 class="animated fadeInUp"><a class="back__button" href="../operator/index.html">Back to Dashboard</a></h2>
+      <h2 class="animated fadeInUp"><a class="back__button" href="../dashboard">Back to Dashboard</a></h2>
       <h1 class="animated fadeInUp">Problem Analytics</h1>
       <div class="month_picker">
         <button class="button__load">
@@ -332,7 +335,7 @@ if (!isset($_SESSION['u_id'])) {
           <canvas id="myChart" width="400" height="200"></canvas>
           <h1 class="graph__title animated fadeInUp">Problem Overview</h1>
           <h3 class="graph__subtitle animated fadeInUp">Breakdown of Problems with Average Time</h3>
-            <table class="problem__table">
+            <table class="Problem__table">
               <tbody>
                 <tr>
                   <th></th>

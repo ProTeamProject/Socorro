@@ -41,6 +41,8 @@ onload = function getPage() {
   }
 }
 
+
+
 //load repeated html elements
 $("#headerDiv").load("../header.html");
 $("#headerSpecialistDiv").load("../header_specialist.html");
@@ -120,12 +122,7 @@ for (i = 0; i < close.length; i++) {
     }
 }
 
-function findSolution() {
-  if (!dismissed) {
-    var d = document.getElementById("alert");
-    d.style.display = "block";
-  }
-}
+
 
 $( "#specialist-entry_1" ).click(function() {
   $( this ).toggleClass( "specialist" );
@@ -157,7 +154,6 @@ $( "#specialist-entry_4" ).click(function() {
 
 
 function increaseHeight(e){
-        findSolution();
        e.style.height = 'auto';
        var newHeight = (e.scrollHeight > 32 ? e.scrollHeight : 32);
        e.style.height = newHeight.toString() + 'px';
@@ -233,6 +229,19 @@ $(window).on("scroll", function() {
         //remove the background property so it comes transparent again (defined in your css)
        $(".header").removeClass("active");
     }
+});
+
+$('#caller-name').on('input', function() {
+  $('#caller-list').show();
+  var text = $(this).val();
+  $.ajax({
+    type: 'GET',
+    url: '../includes/callersearch.php',
+    data: 'txt=' + text,
+    success: function(data){
+      $("#caller-list").html(data);
+    }
+  });
 });
 
 function showSearch() {

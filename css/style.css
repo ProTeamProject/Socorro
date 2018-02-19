@@ -8,14 +8,14 @@ h1 {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-size: 3em;
-  color: white;
+  color: black;
   margin-right: 10px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
 
 h2 {
-  color: #1b99dc;
+  color: #417bbc;
   font-weight: 400;
   font-size: 1.3em;
   margin-bottom: 0;
@@ -28,7 +28,7 @@ h4 {
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 13px;
-  background: #021a31;
+  background: white;
 }
 
 header, nav, footer, section, article, div {
@@ -42,23 +42,23 @@ a, a:link, a:visited, a:focus, a:hover, a:active{
 }
 
 a.back__button {
-  color: #1b99dc ;
+  color: #417bbc ;
   transition: color .2s ease-in-out;
 }
 
 a.back__button:hover {
-  color: white;
+  color: black;
 }
 
 .main__section {
   z-index: 2;
-  background: #021a31; /* Old browsers */
+  background: white; /* Old browsers */
 
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  padding-top: 100px;
+  padding-top: 10px;
 }
 
 .dashboard__main {
@@ -67,7 +67,7 @@ a.back__button:hover {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  padding-top: 100px;
+  padding-top: 10px;
 }
 
 button.button__main {
@@ -91,13 +91,13 @@ ul {
 
 .button__load {
   background-color: transparent;
-  color: white;
-  border: 2px solid #fff;
+  color: black;
+  border: 2px solid #000;
   margin-top: 10px;
 }
 
 .button__load:hover {
-  background-color: #1aa6ce;
+  background-color: #417bbc;
   color: white;
 }
 
@@ -185,8 +185,8 @@ button.toggle-button {
 }
 
 .nav {
-  background-color: #1a4067;
-  box-shadow: 2px 9px 10px -2px rgba(0, 0, 0, 0.35);
+
+
 }
 
 
@@ -255,17 +255,16 @@ transform: translate(0px, -12px) rotate(-45deg);
 .header__inner {
   display: flex;
   justify-content: space-between;
+  background-color: #417bbc;
   align-items: center;
   flex-wrap: wrap;
-  -webkit-box-shadow: 2px 9px 10px -2px rgba(0, 0, 0, 0.35);
-  -moz-box-shadow: 2px 9px 10px -2px rgba(0, 0, 0, 0.35);
-  box-shadow: 2px 9px 10px -2px rgba(0, 0, 0, 0.35);
+
 }
 
 .header {
-  background-color: #1aa6ce;
+
   color: white;
-  position: fixed;
+
   z-index: 2;
   top: 0px;
   width: 100%;
@@ -444,14 +443,13 @@ body {top: 0px!important;}
   align-items: center;
   max-width: 100%;
   min-height: 80px;
-  background: rgb(0, 18, 42);
-  /* Fallback for older browsers without RGBA-support */
-  background: rgba(0, 18, 42, 0.6);
+  color: black;
   margin: 2px;
   border-color: #494949;
   border-width: 1px;
   border-style: solid;
   transition: border-color .15s ease-in-out;
+  transition: background-color .15s ease-in-out;
 }
 
 .specialist {
@@ -470,13 +468,14 @@ body {top: 0px!important;}
 }
 
 .problem__entry:hover {
-  border-color: lightgrey;
+  border-color: #417bbc;
+  background-color: rgba(26, 64, 103, 0.2);
 }
 
 .footer, .button__container {
   display: flex;
   justify-content: center;
-  color: white;
+  color: black;
 }
 
 .status__open {
@@ -518,7 +517,7 @@ h2 a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: black;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 500;
 }
@@ -828,7 +827,7 @@ button.accordion {
 }
 
 button.accordion.active, button.accordion:hover {
-    background-color: #1a4067;
+    background-color: #417bbc;
 }
 
 button.accordion:after {
@@ -860,7 +859,7 @@ div.panel {
 .status {
   background: rgb(0, 18, 42);
   /* Fallback for older browsers without RGBA-support */
-  background: rgba(0, 18, 42, 0.6);
+  background: rgba(0, 18, 42, 0.7);
 
   border-color: #494949;
   border-width: 1px;
@@ -872,6 +871,10 @@ div.panel {
   display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.openingstatus {
+  background: rgba(0, 0, 0, 0.0);
 }
 
 .status .desc {
@@ -892,7 +895,7 @@ div.panel {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 99999;
     opacity:0;
     -webkit-transition: opacity 400ms ease-in;
@@ -910,7 +913,7 @@ div.panel {
     margin: 10% auto;
     padding: 5px 20px 13px 20px;
     border-radius: 10px;
-    background: rgba(0, 18, 42, 0.9);
+    background: rgba(246, 239, 255, 1);
 }
 .close {
     background: #606061;
@@ -931,7 +934,7 @@ div.panel {
     box-shadow: 1px 1px 3px #000;
 }
 .close:hover {
-    background: #00d9ff;
+    background: #417bbc;
 }
 
 .text-centered {
@@ -995,7 +998,7 @@ div.panel {
 	display: flex;
   background: rgb(0, 18, 42);
   /* Fallback for older browsers without RGBA-support */
-  background: rgba(0, 18, 42, 0.6);
+  background: rgba(0, 18, 42, 0.7);
   margin: 2px;
   border-color: #494949;
   border-width: 1px;
@@ -1082,8 +1085,7 @@ div.panel {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
+
     transition: 0.5s;
 }
 
@@ -1146,7 +1148,7 @@ input[type="radio"][name="tabs"] {
   z-index: -1;
 }
 input[type="radio"][name="tabs"]:checked + .tab-label-content label {
-  color: white;
+  color: black;
 }
 input[type="radio"][name="tabs"]:checked + .tab-label-content .tab-content {
   display: block;
@@ -1166,7 +1168,7 @@ input[type="radio"][name="tabs"]:first-of-type:checked ~ .slide {
 .tab-wrap .tab__label {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.8);
-  background-color: #1a4167;
+  background-color: white;
   box-sizing: border-box;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -1184,6 +1186,7 @@ input[type="radio"][name="tabs"]:first-of-type:checked ~ .slide {
   -webkit-transition: background 0.2s ease-in-out;
   transition: background 0.2s ease-in-out;
   width: 100%;
+  color: black;
 }
 
 .slide {
@@ -1202,7 +1205,7 @@ input[type="radio"][name="tabs"]:first-of-type:checked ~ .slide {
 }
 
 .tab-wrap label:hover {
-    background: #00152e;
+    background-color: rgba(26, 64, 103, 0.2);
 }
 
 
@@ -1253,8 +1256,8 @@ input[type="radio"][name="tabs"]:first-of-type:checked ~ .slide {
 
 .problem__table {
   width: 100%;
-  background: rgba(0, 18, 42, 0.6);
-  color: white;
+
+  color: black;
   font-size: 15px;
   border-color: #494949;
 border-width: 1px;
@@ -1267,8 +1270,7 @@ margin-bottom: 20px;
   padding-top: 12px;
 padding-bottom: 12px;
 text-align: left;
-color: white;
-background: rgba(0, 18, 42, 0.6);
+color: black;
 border-bottom-color: #494949;
 border-bottom-width: 1px;
 border-bottom-style: solid;
@@ -1279,7 +1281,6 @@ border-bottom-style: solid;
 padding-bottom: 12px;
 text-align: left;
 color: white;
-background: rgba(0, 18, 42, 0.6);
 border-bottom-color: #494949;
 border-bottom-width: 1px;
 border-bottom-style: solid;
@@ -1287,17 +1288,19 @@ border-bottom-style: solid;
 
 .problem__table td {
   padding: 8px;
-color: white;
-background: rgba(0, 18, 42, 0.6);
+color: black;
+border-left-color: #494949;
+border-left-width: 1px;
+border-left-style: solid;
 }
 
 .overview {
   width: 100%;
-  background: rgba(0, 18, 42, 0.6);
+
 border-color: #494949;
 border-width: 1px;
 border-style: solid;
-color: white;
+color: black;
 font-family: 'Ubuntu', sans-serif;
 margin-bottom: 20px;
 font-size: 15px;
@@ -1305,11 +1308,11 @@ font-size: 15px;
 
 .overview__title {
   width: 100%;
-  background: rgba(0, 18, 42, 0.6);
+
 border-color: #494949;
 border-width: 1px;
 border-style: solid;
-color: white;
+color: black;
 font-family: 'Ubuntu', sans-serif;
 margin-top: 20px;
 text-align: center;
@@ -1331,6 +1334,7 @@ font-size: 15px;
 
 div#myNav.overlay {
   overflow-y: auto;
+  height: 0%;
 }
 
 .#caller-info {

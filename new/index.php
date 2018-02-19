@@ -3,15 +3,17 @@
   include_once '../includes/db.php';
   session_start();
 
+  // Check if user is logged in
   if (!isset($_SESSION['u_id'])) {
-    header("Location: ../index.php");
-    exit();
+      header("Location: ../index.php");
+      exit();
   }
 
-
+  // Check if the user is a specialist
   if ($_SESSION['u_type'] == 'specialist') {
+      // Return to dashboard
     header("Location: ../dashboard");
-    exit();
+      exit();
   }
 
 ?>
@@ -42,7 +44,6 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //query for list of specialists
-
 $sql = "SELECT Specialist.Busy, Specialist.Problems_Assigned, Account.Name, Account.Account_ID, Problem_Type_Specialist.Problem_Type_ID, Problem_Type.Problem_Type_Name FROM Specialist INNER JOIN Account ON Account.Account_ID = Specialist.Account_ID INNER JOIN Problem_Type_Specialist ON Account.Account_ID = Problem_Type_Specialist.Account_ID INNER JOIN Problem_Type ON Problem_Type_Specialist.Problem_Type_ID = Problem_Type.Problem_Type_ID;";
 $stmt2 = $con->prepare($sql);
 $stmt2->execute();
@@ -97,7 +98,7 @@ Problem Info</button>
               <?php
 
               while ($row_type = $stmt3->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
+                  echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
               }
 
                ?>
@@ -119,7 +120,7 @@ Problem Info</button>
                 $stmt4->execute();
 
                 while ($row_type = $stmt4->fetch(PDO::FETCH_ASSOC)) {
-                  echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
+                    echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
                 }
 
                  ?>
@@ -155,8 +156,8 @@ Problem Info</button>
               <?php
 
               while ($row_specialists = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-                $busy = $row_specialists['Busy'] == 1 ? ', Busy' : '';
-                echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong>, Problem Types: ' . $row_specialists['Problem_Type_Name'] . ', Curent Problems: ' . $row_specialists['Problems_Assigned'] . $busy . '</option>';
+                  $busy = $row_specialists['Busy'] == 1 ? ', Busy' : '';
+                  echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong>, Problem Types: ' . $row_specialists['Problem_Type_Name'] . ', Curent Problems: ' . $row_specialists['Problems_Assigned'] . $busy . '</option>';
               }
 
                ?>
@@ -178,7 +179,7 @@ Problem Info</button>
       <button type="button" id="accordion_status" class="accordion animated FadeIn"><i class="fa fa-commenting" aria-hidden="true"></i> Status</button>
       <div class="panel">
         <div class="status__container">
-          <div class="status">
+          <div class="status openingstatus">
             <div class="form-group desc">
               <textarea required="required" onkeyup="increaseHeight(this);" name="status"></textarea>
               <label class="control-label" for="textarea" >Opening Status</label><i class="bar"></i>
@@ -207,59 +208,7 @@ Problem Info</button>
 
   </main>
   <?php include '../includes/busy_modal.php' ?>
-  <div id="openModal1" class="modalDialog">
-    <div>	<a href="#close" title="Close" class="close">X</a>
-          <h2 class="text-centered">Assign Specialist</h2>
 
-              <p style="color:white;">
-                <strong>Problem Type: </strong>Hardware
-              </p>
-              <div class="problems__inner__dash__specialists" style="color:white;">
-                  <div class="problem__entry h-padding-small open" id="problem_27">
-                    <p class="pid">Ext: 29867</p>
-                    <strong><p class="caller__name">Jim Pickins</p></strong>
-                    <p class="problem__type">Hardware</p>
-                    <p class="date__created">10</p>
-                    <div class="status__closed">
-                      <p class="status__text">Busy</p>
-                    </div>
-                  </div>
-
-                  <div id="specialist-entry_2" class="problem__entry h-padding-small open" id="problem_27">
-                    <p class="pid">Ext: 29867</p>
-                    <strong><p class="caller__name">Bert Rodgers</p></strong>
-                    <p class="problem__type">Hardware</p>
-                    <p class="date__created">5</p>
-                    <div class="status__open">
-                      <p class="status__text">Available</p>
-                    </div>
-                  </div>
-
-                  <div id="specialist-entry_3" class="problem__entry h-padding-small open" id="problem_27">
-                    <p class="pid">Ext: 29867</p>
-                    <strong><p class="caller__name">Ronny Dilbert</p></strong>
-                    <p class="problem__type">Hardware</p>
-                    <p class="date__created">3</p>
-                    <div class="status__open">
-                      <p class="status__text">Available</p>
-                    </div>
-                  </div>
-
-                  <div class="problem__entry h-padding-small open" id="problem_27">
-                    <p class="pid">Ext: 29867</p>
-                    <strong><p class="caller__name">John Middleton</p></strong>
-                    <p class="problem__type">Hardware</p>
-                    <p class="date__created">13</p>
-                    <div class="status__closed">
-                      <p class="status__text">Busy</p>
-                    </div>
-                  </div>
-              </div>
-            <div class="button__container">
-            <button class="button__load" style="margin-bottom:10px;">Save</button>
-        </div>
-    </div>
-  </div>
   <div id="openModal2" class="modalDialog">
     <div>	<a href="#close" title="Close" class="close">X</a>
           <h2 class="text-centered">Add Solution</h2>

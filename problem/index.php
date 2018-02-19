@@ -165,7 +165,7 @@
                         <h4>Serial Numbers</h4></td>
                       <td>
                         Software: <?php echo $row['Software_License_Number']; ?>
-                        Hardware: <?php echo $row['Equipment_Serial_Number']; ?>
+                        <br />Hardware: <?php echo $row['Equipment_Serial_Number']; ?>
                       </td>
                     </tr>
                     <tr>
@@ -195,7 +195,7 @@
                   <table cellspacing="10" cellpadding="2">
                     <tr>
                       <td class="first">
-                        <h4>Opertor Name</h4></td>
+                        <h4>Operator Name</h4></td>
                       <td>
                         <?php echo $row['Operator']; ?>
                       </td>

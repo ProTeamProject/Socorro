@@ -8,11 +8,14 @@
     exit();
   }
 
+<<<<<<< HEAD
   if ($_SESSION['u_type'] == 'specialist') {
     header("Location: ../dashboard");
     exit();
   }
 
+=======
+>>>>>>> a2c59d04d13d421d46019d27db81a976fc58f35b
 ?>
 <!DOCTYPE html>
 <html lang="en">

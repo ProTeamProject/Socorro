@@ -68,7 +68,7 @@ a.back__button:hover {
   background-attachment: fixed;
   background-position: center;
   padding-top: 10px;
-  background-color: #ebebeb;
+  background-color: #f3f3f3;
   border-bottom: 1px solid #dbd4d4;
 }
 
@@ -189,7 +189,7 @@ button.toggle-button {
 }
 
 .nav {
-background-color: #ebebeb;
+background-color: #f3f3f3;
 
 }
 

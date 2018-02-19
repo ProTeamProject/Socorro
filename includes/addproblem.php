@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
 
   //retrieve specialist data to update
-  $sql = "SELECT Busy, Average_Time, Number_Solved, Problems_Assigned FROM Specialist WHERE Account_ID = :sid;";
+  $sql = "SELECT Busy, Average_Time, Number_Solved, Problems_Assigned, email FROM Specialist WHERE Account_ID = :sid;";
   $stmt2 = $con->prepare($sql);
   $stmt2->bindParam(':sid', $sid);
   $stmt2->execute();
@@ -129,6 +129,18 @@ if (isset($_POST['submit'])) {
   $stmt->execute();
 
   //email specialist with link
+  include 'email.php';
+  $to = $row_specialist_data['email'];
+  $subject = 'You have a new Problem assigned!';
+  $headers  = "From: testsite < mail@testsite.com >\n";
+  $headers .= "Cc: testsite < mail@testsite.com >\n";
+  $headers .= "X-Sender: testsite < mail@testsite.com >\n";
+  $headers .= 'X-Mailer: PHP/' . phpversion();
+  $headers .= "X-Priority: 1\n"; // Urgent message!
+  $headers .= "Return-Path: mail@testsite.com\n"; // Return path for errors
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+  mail($to, $subject, $message, $headers);
   //update specialist details
 
   //check if solved is checked

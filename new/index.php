@@ -26,11 +26,32 @@
 
 <body>
   <?php include '../header.php' ?>
+  <?php
+
+  //query problem db select last problem
+  $sql = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Problem';";
+
+$stmt = $con->prepare($sql);
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//query for list of specialists
+
+$sql = "SELECT Specialist.Busy, Specialist.Problems_Assigned, Account.Name, Account.Account_ID, Problem_Type_Specialist.Problem_Type_ID, Problem_Type.Problem_Type_Name FROM Specialist INNER JOIN Account ON Account.Account_ID = Specialist.Account_ID INNER JOIN Problem_Type_Specialist ON Account.Account_ID = Problem_Type_Specialist.Account_ID INNER JOIN Problem_Type ON Problem_Type_Specialist.Problem_Type_ID = Problem_Type.Problem_Type_ID;";
+$stmt2 = $con->prepare($sql);
+$stmt2->execute();
+
+//query list of problem types
+$sql = "SELECT Problem_Type_ID, Problem_Type_Name, Parent_Problem_ID FROM Problem_Type;";
+$stmt3 = $con->prepare($sql);
+$stmt3->execute();
+
+   ?>
   <main id="panel" class="main__section">
     <section id="new" class="h-padding-xlarge animated fadeIn">
       <h2 class="animated fadeInUp"><a class="back__button" href="/dashboard">Back to Dashboard</a></h2>
         <div class="heading">
-      <h1 class="animated fadeInUp">New Problem ID: #generate new id</h1>
+      <h1 class="animated fadeInUp">New Problem ID: #<?php echo $row['AUTO_INCREMENT'] ?></h1>
       <div class="date__status__container">
         <p class="date__status animated fadeInUp">
           Created on <?php $date = date('jS F Y H:i'); echo $date; ?>
@@ -38,88 +59,85 @@
       </div>
     </div>
 
-    <form action="../includes/addproblem.php" method="post">
+    <form action="../includes/addproblem.php?id=<?php echo $row['AUTO_INCREMENT'] ?>" method="post">
     <div class="accordian__container">
-      <button id="accordion_caller_info" class="accordion animated FadeIn">
+      <button type="button" id="accordion_caller_info" class="accordion animated FadeIn">
       <i class="fa fa-user" aria-hidden="true"></i> Caller Info
     </button>
       <div class="panel">
 
           <div class="form-group" id="caller-info">
-            <input list="items" id="item" type="text" required="required"/>
+            <input list="items" id="caller-name" type="text" name="caller-name" required="required"/>
             <label class="control-label" for="input">Caller Name</label><i class="bar"></i>
-<datalist id="items">
-<option value="John Smith"  data-job = "IT Director" data-id="129" data-dept="IT" data-ext="23572" selected="true">Ext 23572</option>
-<option value="Johh Smith" data-job = "IT Manager" data-id="129" data-dept="IT" data-ext="23572">Ext 36542</option>
-<option value="Billy Middleton"  data-job = "HR" data-id="129" data-dept="IT" data-ext="23572">Ext 09675</option>
-<option value="Jane Doe"  data-job = "Events Coordinator" data-id="129" data-dept="IT" data-ext="23572">Ext 15746</option>
-<option value="Jane Austin"  data-job = "Marketing" data-id="129" data-dept="IT" data-ext="23572">Ext 17823</option>
-<option value="Charles Dickins"  data-job = "Distribution Manager" data-id="129" data-dept="IT" data-ext="23572">Ext 87564</option>
-    </datalist>
-
-<!--<button id="button" class="button__load"><span>Retrieve User Info</span></button>-->
-<div class="caller__info__output" style="height:30px;">
-
-</div>
-<!--
-            <input list="caller-names" type="text" id="caller-name" required="required"/>
-            <label class="control-label" for="input">Caller Name</label><i class="bar"></i>
-
-            <button id="sub" class="button__load"><span>Retrieve User Info</span></button>
-            <datalist id="caller-names">
-                <option data-id="blahcbakc" value="John Smith">Ext 23442</option>
-                <option data-id="eowfniwief" value="John Smith">Ext 23342</option>
-                <option data-id="owienfomw" value="Billy No Mates">Ext 23452</option>
-                <option data-id="lxlkmoiwmdwe" value="Tim Johnson">Ext 22842</option>
-            </datalist>
-
-            -->
+          </div>
+          <div class="form-group" id="caller-info">
+            <input list="items" id="caller-name" type="text" name="caller-id" required="required"/>
+            <label class="control-label" for="input">Caller ID</label><i class="bar"></i>
           </div>
 
 
       </div>
 
-      <button id="accordion_problem_info" class="accordion animated FadeIn"><i class="fa fa-info-circle" aria-hidden="true"></i>
+      <button type="button" id="accordion_problem_info" class="accordion animated FadeIn"><i class="fa fa-info-circle" aria-hidden="true"></i>
 Problem Info</button>
       <div class="panel">
-        <div id="alert" class="alert info animated FadeIn">
-      <span class="closebtn"><i id="min-icon" class="fa fa-window-minimize" aria-hidden="true"></i></span>
-      <span id="solution-text"><strong>Suggested Solutions</strong>    Show More</span>
-      <span class="openbtn"><i id="bulb-icon" class="fa fa-lightbulb-o" style="display:none;" aria-hidden="true"></i></span>
-    </div>
+
           <div class="form-group">
-            <textarea required="required" onkeyup="increaseHeight(this);"></textarea>
+            <textarea required="required" name="problem-desc" onkeyup="increaseHeight(this);"></textarea>
             <label class="control-label" for="textarea" >Problem Description</label><i class="bar"></i>
           </div>
           <div class="form-group">
-            <select>
-              <option>Printing</option>
-              <option>Hardware</option>
-              <option>Software</option>
-              <option>Internet</option>
-              <option>Email</option>
+            <select name="problem-type">
+              <?php
+
+              while ($row_type = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+                echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
+              }
+
+               ?>
             </select>
             <label class="control-label" for="select">Problem Type</label><i class="bar"></i>
           </div>
           <div class="checkbox">
             <label>
-              <input id="checkbox-create-problem-type" type="checkbox"/><i class="helper"></i>Create New Problem Type
+              <input id="checkbox-create-problem-type" name="check-new-problem-type" value="1" type="checkbox"/><i class="helper"></i>Create New Problem Type
             </label>
           </div>
-          <div style="display:none;" id="new-problem-type" class="form-group">
-            <input type="text" />
-            <label class="control-label" for="input">New Problem Type</label><i class="bar"></i>
+          <div style="display:none;" id="new-problem-type">
+            <div class="form-group">
+              <select name="parent-problem-type">
+                <?php
+
+                $sql = "SELECT Problem_Type_ID, Problem_Type_Name, Parent_Problem_ID FROM Problem_Type;";
+                $stmt4 = $con->prepare($sql);
+                $stmt4->execute();
+
+                while ($row_type = $stmt4->fetch(PDO::FETCH_ASSOC)) {
+                  echo '<option value="' . $row_type['Problem_Type_ID'] . '"><strong>' . $row_type['Problem_Type_Name'] . '</strong>' . '</option>';
+                }
+
+                 ?>
+              </select>
+              <label class="control-label" for="select">Parent Problem Type</label><i class="bar"></i>
+            </div>
+            <div class="form-group">
+              <input type="text" name="new-problem-type"/>
+              <label class="control-label" for="input">New Problem Type</label><i class="bar"></i>
+            </div>
           </div>
+
           <div class="form-group">
-            <input type="text" required="required"/>
+            <input type="text" name="software"/>
             <label class="control-label" for="input">Software Serial Number</label><i class="bar"></i>
           </div>
+
           <div class="form-group">
-            <input type="text" required="required"/>
+            <input type="text" name="hardware"/>
             <label class="control-label" for="input">Hardware Serial Number</label><i class="bar"></i>
           </div>
+
           <div class="form-group">
-            <select>
+            <select name="os">
               <option>MacOS</option>
               <option>Windows</option>
               <option>Linux</option>
@@ -127,34 +145,36 @@ Problem Info</button>
             <label class="control-label" for="select">Operating System</label><i class="bar"></i>
           </div>
           <div class="form-group">
-            <input type="text" required="required"/>
-            <label class="control-label" for="input">Software</label><i class="bar"></i>
-          </div>
-          <div class="form-group">
-            <input type="text" required="required"/>
-            <label class="control-label" for="input">Hardware</label><i class="bar"></i>
-          </div>
-          <div class="form-group">
-            <a href="#openModal"><button class="button__main" style="color:black">Assign Specialist</button></a>
+            <select name="specialist">
+              <?php
+
+              while ($row_specialists = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                $busy = $row_specialists['Busy'] == 1 ? ', Busy' : '';
+                echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong>, Problem Types: ' . $row_specialists['Problem_Type_Name'] . ', Curent Problems: ' . $row_specialists['Problems_Assigned'] . $busy . '</option>';
+              }
+
+               ?>
+            </select>
+            <label class="control-label" for="select">Assign Specialist</label><i class="bar"></i>
           </div>
           <div class="checkbox">
             <label>
-              <input id="checkbox-solved" type="checkbox"/><i class="helper"></i>Problem Solved (Closed)
+              <input id="checkbox-solved" type="checkbox" value="1" name="solved"/><i class="helper"></i>Problem Solved (Closed)
             </label>
-            <a href="#openModal2"><button id="solution-button"class="button__main" style="display:none;color:black;margin-top:20px;">Enter Solution</button></a>
+            <a href="#openModal2"><button type="button" id="solution-button"class="button__main" style="display:none;color:black;margin-top:20px;">Enter Solution</button></a>
           </div>
-          <div style="height:90px;">
+          <div style="height:170px;">
 
           </div>
 
       </div>
 
-      <button id="accordion_status" class="accordion animated FadeIn"><i class="fa fa-commenting" aria-hidden="true"></i> Status</button>
+      <button type="button" id="accordion_status" class="accordion animated FadeIn"><i class="fa fa-commenting" aria-hidden="true"></i> Status</button>
       <div class="panel">
         <div class="status__container">
           <div class="status">
             <div class="form-group desc">
-              <textarea required="required" onkeyup="increaseHeight(this);"></textarea>
+              <textarea required="required" onkeyup="increaseHeight(this);" name="status"></textarea>
               <label class="control-label" for="textarea" >Opening Status</label><i class="bar"></i>
             </div>
           </div>
@@ -238,14 +258,8 @@ Problem Info</button>
           <h2 class="text-centered">Add Solution</h2>
 
               <div class="form-group desc">
-                <textarea onkeyup="increaseHeight(this);"></textarea>
+                <textarea onkeyup="increaseHeight(this);" name="solution"></textarea>
                 <label class="control-label" for="textarea">Solution</label><i class="bar"></i>
-
-              <div class="checkbox">
-                <label>
-                  <input id="checkbox-solved" type="checkbox"/><i class="helper"></i>Problem Solved (Closed)
-                </label>
-              </div>
             </div>
             <div class="button__container">
             <button class="button__load" style="margin-bottom:10px;">Save</button>

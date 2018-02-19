@@ -30,7 +30,7 @@
   $sql = "SELECT Problem.Problem_ID, Problem.State, Employee.Caller_Name, Employee.Caller_ID, Employee.Job,
   Employee.Extension, Employee.Department, Problem.Problem_Desc, Problem_Type.Problem_Type_Name,
   Software_Problem.Software_License_Number, Software_Problem.Operating_System, Software.Software_Name, Equipment.Equipment_Name,
-  Equipment_Problem.Equipment_Serial_Number, A1.Name As Operator, A2.Name As Specialist, MAX(Problem_Status.Status_Date) As Status_Date
+  Equipment_Problem.Equipment_Serial_Number, A1.Name As Operator, A2.Name As Specialist, A2.Account_ID As Specialist_ID, MAX(Problem_Status.Status_Date) As Status_Date
   FROM Problem
   LEFT JOIN Employee ON Employee.Caller_ID = Problem.Caller_ID
   LEFT JOIN Problem_Type ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID
@@ -75,7 +75,7 @@
           <h1 class="animated fadeInUp">Problem ID: #<?php echo $row['Problem_ID']; ?></h1>
           <div class="status__<?php echo $row['State']; ?> animated fadeInUp">
             <p class="status__text">
-              <?php echo $row['State']; ?>
+              <?php $state = $row['State']; echo $state; ?>
             </p>
           </div>
           <div class="date__status__container">
@@ -207,21 +207,32 @@
                         <?php echo $row['Specialist']; ?>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="first">
-                        <h4>Suggested Solution</h4></td>
-                      <td>
-                        View
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="second">
-                        <h4>Found Solution</h4>
 
-                          <a href="#openModal2"><button class="button__main" style="color:black">Enter Solution</button></a>
-                        </td>
-                    </tr>
+                    <?php
 
+                    //check if specialist
+                    if ($state == 'pending') {
+                      if ($_SESSION['u_type'] == 'specialist') {
+                        //check if specialist assigned = specialist logged in
+                        if ($_SESSION['u_id'] == $row['Specialist_ID']) {
+                          //echo accept button
+                          echo '
+                          <tr>
+                            <td class="first">
+                              <h4>Accept Problem?</h4></td>
+                            <td>
+                            <form action="../includes/accept.php?pid=' . $pid . '" method="post">
+                              <button id="accept-button" name="submit">Accept</button>
+                            </form>
+                            </td>
+                          </tr>';
+                        }
+                      }
+                    }
+
+
+
+                     ?>
                   </table>
                 </div>
               </div>

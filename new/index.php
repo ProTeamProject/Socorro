@@ -8,14 +8,12 @@
     exit();
   }
 
-<<<<<<< HEAD
+
   if ($_SESSION['u_type'] == 'specialist') {
     header("Location: ../dashboard");
     exit();
   }
 
-=======
->>>>>>> a2c59d04d13d421d46019d27db81a976fc58f35b
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -208,7 +206,8 @@ Problem Info</button>
     </section>
 
   </main>
-  <div id="openModal" class="modalDialog">
+  <?php include '../includes/busy_modal.php' ?>
+  <div id="openModal1" class="modalDialog">
     <div>	<a href="#close" title="Close" class="close">X</a>
           <h2 class="text-centered">Assign Specialist</h2>
 

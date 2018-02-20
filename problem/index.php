@@ -54,7 +54,7 @@
   FROM Problem_Status
   INNER JOIN Account ON Problem_Status.Account_ID = Account.Account_ID
   INNER JOIN Status ON Status.Status_ID = Problem_Status.Status_ID
-  WHERE Problem_Status.Problem_ID = :id;
+  WHERE Problem_Status.Problem_ID = :id
   ORDER BY Problem_Status.Status_Date ASC";
 
   $stmt_status = $con->prepare($sql_status);
@@ -296,7 +296,7 @@
                   </select>
                   <label class="control-label" for="select">Status Type</label><i class="bar"></i>
                 </div>
-                <div id="name-input" class="form-group">
+                <div style="display:none;" id="name-input" class="form-group">
                   <select name="cid">
                     <?php
 

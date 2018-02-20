@@ -129,7 +129,7 @@
 
             // Associative array
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<a class="' . $row['state'] . '"href="/problem/index.php?id=' . $row['Problem_ID'] . '"><div class="problem__entry h-padding-small ' . $row['state']. ' id="problem_27"><p class="pid">#' . $row['Problem_ID'] . '</p><p class="caller__name">' . $row['Caller_Name'] . '</p><p class="date__created">' . date('jS F Y H:i', strtotime($row['Open_date'])) . '</p><p class="updated">' . date('jS F Y H:i', strtotime($row['Status_Date'])) . '</p><p class="problem__type">' . $row['problem_type_name'] . '</p><div class="status__' . $row['state'] . '"><p class="status__text">' . $row['state'] . '</p></div></div></a>';
+                echo '<a class="' . $row['state'] . '"href="/problem/index.php?id=' . $row['Problem_ID'] . '"><div class="problem__entry h-padding-small ' . $row['state']. ' id="problem_27"><p class="pid">#' . $row['Problem_ID'] . '</p><p class="caller__name">' . $row['Caller_Name'] . '</p><p class="date__created">' . date('jS F Y H:i', strtotime($row['Open_date'])) . '</p><p class="updated">' . date('jS F Y H:i', strtotime($row['Status_Date'])) . '</p><p class="problem__type">' . $row['Problem_Type_Name'] . '</p><div class="status__' . $row['state'] . '"><p class="status__text">' . $row['state'] . '</p></div></div></a>';
             }
 
              ?>
@@ -199,7 +199,7 @@
             <?php
 
             while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-                echo '<a class="' . $row['state'] . '"href="/problem/index.php?id=' . $row['Problem_ID'] . '"><div class="problem__entry h-padding-small ' . $row['state']. ' id="problem_27"><p class="pid">#' . $row['Problem_ID'] . '</p><p class="caller__name">' . $row['Caller_Name'] . '</p><p class="date__created">' . date('jS F Y H:i', strtotime($row['Open_date'])) . '</p><p class="updated">' . date('jS F Y H:i', strtotime($row['Status_Date'])) . '</p><p class="problem__type">' . $row['problem_type_name'] . '</p><div class="status__' . $row['state'] . '"><p class="status__text">' . $row['state'] . '</p></div></div></a>';
+                echo '<a class="' . $row['state'] . '"href="/problem/index.php?id=' . $row['Problem_ID'] . '"><div class="problem__entry h-padding-small ' . $row['state']. ' id="problem_27"><p class="pid">#' . $row['Problem_ID'] . '</p><p class="caller__name">' . $row['Caller_Name'] . '</p><p class="date__created">' . date('jS F Y H:i', strtotime($row['Open_date'])) . '</p><p class="updated">' . date('jS F Y H:i', strtotime($row['Status_Date'])) . '</p><p class="problem__type">' . $row['Problem_Type_Name'] . '</p><div class="status__' . $row['state'] . '"><p class="status__text">' . $row['state'] . '</p></div></div></a>';
             }
 
              ?>

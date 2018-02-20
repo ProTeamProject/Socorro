@@ -66,7 +66,9 @@ if (isset($_POST['submit'])) {
     $solution_text = 'Problem closed with solution: ' . $solution;
     $stmt->bindParam(':comment', $solution_text);
     $stmt->bindParam(':uid', $uid);
-    $stmt->bindParam(':status_date', date("Y-m-d H:i:s"));
+    $second = date("s");
+    $second += 1;
+    $stmt->bindParam(':status_date', date("Y-m-d H:i:$second"));
     $stmt->execute();
 
     //Update specialist analytics

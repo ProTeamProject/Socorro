@@ -44,7 +44,7 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //query for list of specialists
-$sql = "SELECT Specialist.Busy, Specialist.Problems_Assigned, Account.Name, Account.Account_ID, Problem_Type_Specialist.Problem_Type_ID, Problem_Type.Problem_Type_Name FROM Specialist INNER JOIN Account ON Account.Account_ID = Specialist.Account_ID INNER JOIN Problem_Type_Specialist ON Account.Account_ID = Problem_Type_Specialist.Account_ID INNER JOIN Problem_Type ON Problem_Type_Specialist.Problem_Type_ID = Problem_Type.Problem_Type_ID;";
+$sql = "SELECT Specialist.Busy, Specialist.Problems_Assigned, Account.Name, Account.Account_ID, Problem_Type_Specialist.Problem_Type_ID, Specialist.Account_ID, GROUP_CONCAT(Problem_Type.Problem_Type_Name) As Problem_Types FROM Specialist INNER JOIN Account ON Account.Account_ID = Specialist.Account_ID INNER JOIN Problem_Type_Specialist ON Account.Account_ID = Problem_Type_Specialist.Account_ID INNER JOIN Problem_Type ON Problem_Type_Specialist.Problem_Type_ID = Problem_Type.Problem_Type_ID GROUP BY Specialist.Account_ID;";
 $stmt2 = $con->prepare($sql);
 $stmt2->execute();
 
@@ -172,7 +172,7 @@ Problem Info</button>
 
               while ($row_specialists = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                   $busy = $row_specialists['Busy'] == 1 ? ', Busy' : '';
-                  echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong>, Problem Types: ' . $row_specialists['Problem_Type_Name'] . ', Curent Problems: ' . $row_specialists['Problems_Assigned'] . $busy . '</option>';
+                  echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong>, Problem Types: ' . $row_specialists['Problem_Types'] . ', Curent Problems: ' . $row_specialists['Problems_Assigned'] . $busy . '</option>';
               }
 
                ?>
@@ -185,7 +185,7 @@ Problem Info</button>
             </label>
             <a href="#openModal2"><button type="button" id="solution-button"class="button__main" style="display:none;color:black;margin-top:20px;">Enter Solution</button></a>
           </div>
-          <div style="height:170px;">
+          <div style="height:230px;">
 
           </div>
 

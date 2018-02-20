@@ -89,13 +89,6 @@ if (!isset($_SESSION['u_id'])) {
   $stmt3->execute();
   $result3 = $stmt3->fetch(PDO::FETCH_ASSOC);
 
-  $sql7 = "SELECT Average_Time, Number_Solved, Problems_Assigned, Busy FROM Specialist
-  WHERE Account_ID = :sid"; //Breakdown of individual specialist
-  $stmt7 = $con->prepare($sql7);
-  $stmt7->bindParam(':sid', $sid);
-  $stmt7->execute();
-$result7 = $stmt7->fetch(PDO::FETCH_ASSOC);
-
   $sql8 = "SELECT TIMESTAMPDIFF(second, Problem.Open_Date, Problem.Close_Date)/ count(Problem_Type.Software_Or_Hardware) AS averageTime
   FROM Problem INNER JOIN Problem_Type ON Problem_Type.Problem_Type_ID = Problem.Problem_Type_ID WHERE Problem.Close_Date IS NOT NULL
   and Problem_Type.Software_Or_Hardware = 6 and Problem.Open_Date BETWEEN :year'/':month'/01' and :year'/':month'/31'"; // average time to complete
@@ -306,47 +299,7 @@ $result7 = $stmt7->fetch(PDO::FETCH_ASSOC);
     <section id="new" class="h-padding-xlarge animated fadeIn">
       <h2 class="animated fadeInUp"><a class="back__button" href="../dashboard">Back to Dashboard</a></h2>
       <h1 class="animated fadeInUp">Problem Analytics</h1>
-      <div class="month_picker">
-        <button class="button__load">
-            Current Month
-          </button>
-        <button class="button__load">
-            January
-          </button>
-        <button class="button__load">
-            February
-          </button>
-        <button class="button__load">
-            March
-          </button>
-        <button class="button__load">
-            April
-          </button>
-        <button class="button__load">
-            May
-          </button>
-        <button class="button__load">
-            June
-          </button>
-        <button class="button__load">
-            July
-          </button>
-        <button class="button__load">
-            August
-          </button>
-        <button class="button__load">
-            September
-          </button>
-        <button class="button__load">
-            October
-          </button>
-        <button class="button__load">
-            November
-          </button>
-        <button class="button__load">
-            December
-          </button>
-      </div>
+
       <hr class="animated fadeInUp" />
       <h1 class="animated fadeInUp">Total Problems for  <?php echo date('F') . ': ' . $result4['count(Problem_ID)']; ?></h1>
       <h3 class="graph__subtitle">Average time to close: <?php echo secondsToTime(ceil($average)); ?></h3>
@@ -407,24 +360,24 @@ $result7 = $stmt7->fetch(PDO::FETCH_ASSOC);
 
 		<p>
       <div class="form-group">
-        <select name="specialist">
+        <select id="specialist-box" name="specialist">
           <?php
 
           //query for list of specialists
           $sql = "SELECT Specialist.Busy, Specialist.Problems_Assigned, Account.Name, Account.Account_ID, Problem_Type_Specialist.Problem_Type_ID, Specialist.Account_ID, GROUP_CONCAT(Problem_Type.Problem_Type_Name) As Problem_Types FROM Specialist INNER JOIN Account ON Account.Account_ID = Specialist.Account_ID INNER JOIN Problem_Type_Specialist ON Account.Account_ID = Problem_Type_Specialist.Account_ID INNER JOIN Problem_Type ON Problem_Type_Specialist.Problem_Type_ID = Problem_Type.Problem_Type_ID GROUP BY Specialist.Account_ID;";
           $stmt2 = $con->prepare($sql);
           $stmt2->execute();
-
+          echo '<option>Select Specialist</option>';
           while ($row_specialists = $stmt2->fetch(PDO::FETCH_ASSOC)) {
               $busy = $row_specialists['Busy'] == 1 ? ', Busy' : '';
               echo '<option value="' . $row_specialists['Account_ID'] . '"><strong>' . $row_specialists['Name'] . '</strong></option>';
           }
 
+
            ?>
         </select>
         <label class="control-label" for="select">Select Specialist</label><i class="bar"></i>
-
-        <?php echo 'Average time to solve a problem: ' . $result7['Average_Time'] . ' hours <br />' .  'Total number of problems solved: ' . $result7['Number_Solved'] . '<br />' . 'Number of problems currently assigned: ' . $result7['Problems_Assigned'] . '<br />' . 'Busy status: ' . $result7['Busy'] . '<br /> ';?>
+        <div id="specialist-area"> </div>
       </div>
 
 

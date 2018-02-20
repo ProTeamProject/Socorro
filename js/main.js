@@ -228,6 +228,30 @@ $('#hardware-number').on('input', function() {
   });
 });
 
+$('#hardware-number').on('change', function() {
+  var text = $(this).val();
+  $.ajax({
+    type: 'GET',
+    url: '../includes/hardwaresearch.php',
+    data: 'txt=' + text,
+    success: function(data){
+      $("#specialist-area").html(data);
+    }
+  });
+});
+
+$('#specialist-box').on('change', function() {
+  var text = $(this).val();
+  $.ajax({
+    type: 'GET',
+    url: '../includes/specialist.php',
+    data: 'txt=' + text,
+    success: function(data){
+      $("#specialist-area").html(data);
+    }
+  });
+});
+
 function showSearch() {
   //retrieve search term
   if (pagetype == "dash") {

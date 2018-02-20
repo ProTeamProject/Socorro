@@ -132,6 +132,13 @@ if (isset($_POST['submit'])) {
   $stmt->bindParam(':status_date', $date);
   $stmt->execute();
 
+  $problems_assigned = intval($row_specialist_data['Problems_Assigned']) + 1;
+  $sql = "UPDATE Specialist SET Problems_Assigned = :problems_assigned WHERE Account_ID = :sid;";
+  $stmt2 = $con->prepare($sql);
+  $stmt2->bindParam(':sid', $sid);
+  $stmt2->bindParam(':problems_assigned', $problems_assigned);
+  $stmt2->execute();
+
   //email specialist with link
   include 'email.php';
   $to = $row_specialist_data['email'];
@@ -181,6 +188,22 @@ if (isset($_POST['submit'])) {
     $stmt->execute();
 
     //update specialist details
+    $number_solved = intval($row_specialist_data['Number_Solved']) + 1;
+    $problems_assigned = intval($row_specialist_data['Problems_Assigned']) - 1;
+    $sql6 = "SELECT TIMESTAMPDIFF(hour, Open_Date, Close_Date)/ count(Problem_ID) AS averageTime FROM Problem WHERE Specialist_Account_ID = :sid AND Close_Date IS NOT NULL"; // works out time in seconds for Problem completion
+    $stmt6 = $con->prepare($sql6);
+    $stmt6->bindParam(':sid', $sid);
+    $stmt6->execute();
+    $result_average = $stmt6->fetch(PDO::FETCH_ASSOC);
+    $average_time = intval($row_average['averageTime']);
+
+    $sql = "UPDATE Specialist SET Average_Time = :average_time, Number_Solved = :number_solved, Problems_Assigned = :problems_assigned WHERE Account_ID = :sid;";
+    $stmt2 = $con->prepare($sql);
+    $stmt2->bindParam(':sid', $sid);
+    $stmt2->bindParam(':number_solved', $number_solved);
+    $stmt2->bindParam(':problems_assigned', $problems_assigned);
+    $stmt2->bindParam(':average_time', $average_time);
+    $stmt2->execute();
   }
 
   //redirect to new problem page

@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 
   $pid = $_GET['id'];
 
-  $opendate = date("Y-m-d h:i:s");
+  $opendate = date("Y-m-d H:i:s");
 
   $name = $_POST['caller-name'];
   $cid = $_POST['caller-id'];
@@ -29,6 +29,7 @@ if (isset($_POST['submit'])) {
   $softwareno = $_POST['software'];
   $hardwareno = $_POST['hardware'];
   $os = $_POST['os'];
+  $osVersion = $_POST['os-ver'];
   $solved = $_POST['solved'];
   $solution = $_POST['solution'];
   $status = $_POST['status'];
@@ -98,7 +99,8 @@ if (isset($_POST['submit'])) {
   $sql = "INSERT INTO Software_Problem (Problem_ID, Software_License_Number, Operating_System) VALUES (:pid, :softwareno, :os)";
   $stmt = $con->prepare($sql);
   $stmt->bindParam(':softwareno', $softwareno);
-  $stmt->bindParam(':os', $os);
+  $operatingsystem = $os . ' ' . $osVersion;
+  $stmt->bindParam(':os', $operatingsystem);
   $stmt->bindParam(':pid', $pid);
   $stmt->execute();
 
@@ -115,7 +117,8 @@ if (isset($_POST['submit'])) {
   $stmt->bindParam(':uid', $uid);
   $stmt->bindParam(':comment', $status);
   $stmt->bindParam(':pid', $pid);
-  $stmt->bindParam(':status_date', $opendate);
+  $date = date("Y-m-d H:i:s");
+  $stmt->bindParam(':status_date', $date);
   $stmt->execute();
 
   //post assign status
@@ -125,7 +128,8 @@ if (isset($_POST['submit'])) {
   $stmt->bindParam(':uid', $uid);
   $stmt->bindParam(':comment', $assignstatus);
   $stmt->bindParam(':pid', $pid);
-  $stmt->bindParam(':status_date', $opendate);
+  $date = date("Y-m-d H:i:s");
+  $stmt->bindParam(':status_date', $date);
   $stmt->execute();
 
   //email specialist with link
@@ -141,13 +145,43 @@ if (isset($_POST['submit'])) {
   $headers .= "MIME-Version: 1.0\r\n";
   $headers .= "Content-Type: text/html; charset=iso-8859-1\n";
   mail($to, $subject, $message, $headers);
+
   //update specialist details
 
   //check if solved is checked
-    //insert solution into tables
-    //close problem
-    //post close status
+  if ($solved == 1) {
+    //Add solution
+    $sql_solution = "INSERT INTO Solution (Solution_Desc, Solution_Counter) VALUES (:solution, 1)";
+    $stmt = $con->prepare($sql_solution);
+    $stmt->bindParam(':solution', $solution);
+    $stmt->execute();
+
+    //Assign solution to problem
+    $sql_solution2 = "INSERT INTO Solution_Problem (Solution_ID, Problem_ID) VALUES (LAST_INSERT_ID(), :pid)";
+    $stmt2 = $con->prepare($sql_solution2);
+    $stmt2->bindParam(':pid', $pid);
+    $stmt2->execute();
+
+    //Mark problem as closed
+    $sql_close = "UPDATE Problem SET State = 'closed', Close_Date = :date_close WHERE Problem_ID = :pid;";
+    $stmt3 = $con->prepare($sql_close);
+    $date_close = date("Y-m-d H:i:s");
+    $stmt3->bindParam(':date_close', $date_close);
+    $stmt3->bindParam(':pid', $pid);
+    $stmt3->execute();
+
+    //Post closed status
+    $sql = "INSERT INTO Problem_Status (Problem_ID, Status_ID, Comment, Account_ID, Status_Date, Caller_ID) VALUES (:id, 3, :comment, :uid, :status_date, 0)";
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(':id', $pid);
+    $solution_text = 'Problem closed with solution: ' . $solution;
+    $stmt->bindParam(':comment', $solution_text);
+    $stmt->bindParam(':uid', $uid);
+    $stmt->bindParam(':status_date', date("Y-m-d H:i:s"));
+    $stmt->execute();
+
     //update specialist details
+  }
 
   //redirect to new problem page
   header('Location: ../problem/index.php?id=' . $pid);

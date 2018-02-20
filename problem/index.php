@@ -228,6 +228,21 @@
                           </tr>';
                         }
                       }
+                    } else if ($state == 'closed') {
+                      $sql = "SELECT Solution.Solution_Desc FROM Solution INNER JOIN Solution_Problem ON Solution_Problem.Solution_ID = Solution.Solution_ID WHERE Solution_Problem.Problem_ID = :pid";
+                      $stmt = $con->prepare($sql);
+                      $stmt->bindParam(':pid', $pid);
+                      $stmt->execute();
+                      $row_solution = $stmt->fetch(PDO::FETCH_ASSOC);
+                      echo '<tr>
+                        <td class="first">
+                          <h4>View Solution?</h4></td>
+                        <td>
+
+                          <a href="#openModal2"><button id="show-solution-button">Show</button></a>
+
+                        </td>
+                      </tr>';
                     }
 
 
@@ -252,7 +267,7 @@
                 //check if state is closed
                 if ($row['State'] != 'closed') {
                   echo '<div class="button__container v-padding-mid">
-                    <a href="#openModal1"><button class="button__load">Add Status</button></a>
+                    <a href="#openModal1"><button class="button__load">Add Status/Close</button></a>
                   </div>';
                 }
                 ?>
@@ -276,14 +291,25 @@
             <h2 class="text-centered">Add New Status</h2>
                 <div class="form-group">
                   <select id="status-type" name="type">
-                    <option>Call</option>
                     <option>Note</option>
+                    <option>Call</option>
                   </select>
                   <label class="control-label" for="select">Status Type</label><i class="bar"></i>
                 </div>
                 <div id="name-input" class="form-group">
-                  <input type="text" name="cid" />
-                  <label class="control-label" for="input">Caller ID</label><i class="bar"></i>
+                  <select name="cid">
+                    <?php
+
+                    $sql = "SELECT Caller_ID, Caller_Name, Job, Department, Extension FROM Employee ORDER BY Caller_Name ASC;";
+                    $stmt4 = $con->prepare($sql);
+                    $stmt4->execute();
+
+                    while ($row_emp = $stmt4->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . $row_emp['Caller_ID'] . '">' . $row_emp['Caller_Name'] . ', ' . 'ID: ' . $row_emp['Caller_ID'] . ', Ext: ' . $row_emp['Extension'] . ', ' . $row_emp['Job'] . ', '. $row_emp['Department'] . '</option>';
+                    }
+
+                     ?>
+                  </select>
                 </div>
                 <div class="form-group desc">
                   <textarea required="required" onkeyup="increaseHeight(this);" name="comment"></textarea>
@@ -308,16 +334,14 @@
     </div>
     <div id="openModal2" class="modalDialog">
       <div>	<a href="#close" title="Close" class="close">X</a>
-            <h2 class="text-centered">Add Solution</h2>
+            <h2 class="text-centered">View Solution</h2>
 
-                <div class="form-group desc">
-                  <textarea required="required" onkeyup="increaseHeight(this);"></textarea>
-                  <label class="control-label" for="textarea">Solution</label><i class="bar"></i>
+                <?php
 
+                  echo $row_solution['Solution_Desc'];
 
-              </div>
+                 ?>
               <div class="button__container">
-              <button class="button__load" style="margin-bottom:10px;">Save</button>
           </div>
       </div>
     </div>

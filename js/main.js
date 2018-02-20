@@ -26,6 +26,7 @@ if (pagetype == "new") {
   var checkbox = document.getElementById('checkbox-solved');
   checkbox.checked = false;
 }
+
 /*
 $(".dashboard__checkbox__container :checkbox").click(function() {
        $("div").hide();
@@ -131,8 +132,11 @@ function increaseHeight(e){
        e.style.height = 'auto';
        var newHeight = (e.scrollHeight > 32 ? e.scrollHeight : 32);
        e.style.height = newHeight.toString() + 'px';
-    }
+}
 
+function changeMaxHeight() {
+  acc.style.maxHeight = '100%';
+}
 
 
 
@@ -200,15 +204,26 @@ $(window).on("scroll", function() {
     }
 });
 
-$('#caller-name').on('input', function() {
-  $('#caller-list').show();
+$('#software-number').on('input', function() {
   var text = $(this).val();
   $.ajax({
     type: 'GET',
-    url: '../includes/callersearch.php',
+    url: '../includes/softwaresearch.php',
     data: 'txt=' + text,
     success: function(data){
-      $("#caller-list").html(data);
+      $("#alert-area").html(data);
+    }
+  });
+});
+
+$('#hardware-number').on('input', function() {
+  var text = $(this).val();
+  $.ajax({
+    type: 'GET',
+    url: '../includes/hardwaresearch.php',
+    data: 'txt=' + text,
+    success: function(data){
+      $("#alert-area-2").html(data);
     }
   });
 });
@@ -253,6 +268,34 @@ $("#status-type").on('change', function() {
     }
 });
 
+var mac = ["10.0 Cheetah", "10.1 Puma", "10.2 Jaguar", "10.3 Panther", "10.4 Tiger", "10.5 Leopard", "10.6 Snow Leopard", "10.7 Lion", "10.8 Mountain Lion", "10.9 Mavericks", "10.10 Yosemite", "10.11 El Capitan", "10.12 Sierra", "10.13 High Sierra"];
+
+for (var i=0;i<mac.length;i++){
+  $('<option/>').val(mac[i]).html(mac[i]).appendTo('#os-version');
+}
+
+$("#os-type").on('change', function() {
+  var mac = ["10.0 Cheetah", "10.1 Puma", "10.2 Jaguar", "10.3 Panther", "10.4 Tiger", "10.5 Leopard", "10.6 Snow Leopard", "10.7 Lion", "10.8 Mountain Lion", "10.9 Mavericks", "10.10 Yosemite", "10.11 El Capitan", "10.12 Sierra", "10.13 High Sierra"];
+  var windows = ["XP", "Vista", "7", "8", "10"];
+  var linux = ["Ubuntu", "Fedora", "Arch Linux", "CentOS", "Debian"];
+    if ($(this).val() == "MacOS") {
+      $('#os-version').empty();
+      for (var i=0;i<mac.length;i++){
+        $('<option/>').val(mac[i]).html(mac[i]).appendTo('#os-version');
+      }
+    } else if ($(this).val() == "Windows") {
+      $('#os-version').empty();
+      for (var i=0;i<windows.length;i++){
+        $('<option/>').val(windows[i]).html(windows[i]).appendTo('#os-version');
+      }
+    } else if ($(this).val() == "Linux") {
+      $('#os-version').empty();
+      for (var i=0;i<linux.length;i++){
+        $('<option/>').val(linux[i]).html(linux[i]).appendTo('#os-version');
+      }
+    }
+});
+
 $("#checkbox-solved").on('change', function() {
     if (document.getElementById('solution-button').style.display == 'none'){
         document.getElementById('solution-button').style.display = 'block';
@@ -264,8 +307,10 @@ $("#checkbox-solved").on('change', function() {
 $("#checkbox-create-problem-type").on('change', function() {
     if (document.getElementById('new-problem-type').style.display == 'none'){
         document.getElementById('new-problem-type').style.display = 'block';
+        document.getElementById('problem-type').style.display = 'none';
     } else {
         document.getElementById('new-problem-type').style.display = 'none';
+        document.getElementById('problem-type').style.display = 'block';
     }
 });
 
@@ -277,7 +322,6 @@ $("#checkbox-solved-status").on('change', function() {
         document.getElementById('enter-solution').style.display = 'none';
     }
 });
-
 
 function clearSearch() {
   document.getElementById("search").value = "";

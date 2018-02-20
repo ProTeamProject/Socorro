@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
   $stmt->bindParam(':id', $pid);
   $stmt->bindParam(':comment', $comment);
   $stmt->bindParam(':uid', $uid);
-  $date_status = date("Y-m-d h:i:s");
+  $date_status = date("Y-m-d H:i:s");
   $stmt->bindParam(':status_date', $date_status);
   $stmt->execute();
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
     //Mark problem as closed
     $sql_close = "UPDATE Problem SET State = 'closed', Close_Date = :date_close WHERE Problem_ID = :pid;";
     $stmt3 = $con->prepare($sql_close);
-    $date_close = date("Y-m-d h:i:s");
+    $date_close = date("Y-m-d H:i:s");
     $stmt3->bindParam(':date_close', $date_close);
     $stmt3->bindParam(':pid', $pid);
     $stmt3->execute();
@@ -66,13 +66,15 @@ if (isset($_POST['submit'])) {
     $solution_text = 'Problem closed with solution: ' . $solution;
     $stmt->bindParam(':comment', $solution_text);
     $stmt->bindParam(':uid', $uid);
-    $stmt->bindParam(':status_date', date("Y-m-d h:i:s"));
+    $stmt->bindParam(':status_date', date("Y-m-d H:i:s"));
     $stmt->execute();
+
+    //Update specialist analytics
+      //Retrieve number solved, average time
 
   }
 
-  //Update specialist analytics
-    //Retrieve number solved, average time
+
 
   //return to page before you added status
   header('Location: ' . $_SERVER['HTTP_REFERER']);

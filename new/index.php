@@ -72,17 +72,22 @@ $stmt3->execute();
       <i class="fa fa-user" aria-hidden="true"></i> Caller Info
     </button>
       <div class="panel">
+        <div class="form-group">
+          <select name="caller-id">
+            <?php
 
-          <div class="form-group" id="caller-info">
-            <input list="items" id="caller-name" type="text" name="caller-name" required="required"/>
-            <label class="control-label" for="input">Caller Name</label><i class="bar"></i>
-          </div>
-          <div class="form-group" id="caller-info">
-            <input list="items" id="caller-name" type="text" name="caller-id" required="required"/>
-            <label class="control-label" for="input">Caller ID</label><i class="bar"></i>
-          </div>
+            $sql = "SELECT Caller_ID, Caller_Name, Job, Department, Extension FROM Employee ORDER BY Caller_Name ASC;";
+            $stmt4 = $con->prepare($sql);
+            $stmt4->execute();
 
+            while ($row_emp = $stmt4->fetch(PDO::FETCH_ASSOC)) {
+                echo '<option value="' . $row_emp['Caller_ID'] . '">' . $row_emp['Caller_Name'] . ', ' . 'ID: ' . $row_emp['Caller_ID'] . ', Ext: ' . $row_emp['Extension'] . ', ' . $row_emp['Job'] . ', '. $row_emp['Department'] . '</option>';
+            }
 
+             ?>
+          </select>
+          <label class="control-label" for="select">Select Employee*</label><i class="bar"></i>
+        </div>
       </div>
 
       <button type="button" id="accordion_problem_info" class="accordion animated FadeIn"><i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -90,11 +95,16 @@ Problem Info</button>
       <div class="panel">
 
           <div class="form-group">
-            <textarea required="required" name="problem-desc" onkeyup="increaseHeight(this);"></textarea>
-            <label class="control-label" for="textarea" >Problem Description</label><i class="bar"></i>
+            <textarea required="required" name="problem-desc" ></textarea>
+            <label class="control-label" for="textarea" >Problem Description*</label><i class="bar"></i>
           </div>
-          <div class="form-group">
-            <select name="problem-type">
+          <div class="checkbox">
+            <label>
+              <input id="checkbox-create-problem-type" name="check-new-problem-type" value="1" type="checkbox"/><i class="helper"></i>Create New Problem Type
+            </label>
+          </div>
+          <div id="problem-type" class="form-group">
+            <select  name="problem-type">
               <?php
 
               while ($row_type = $stmt3->fetch(PDO::FETCH_ASSOC)) {
@@ -104,11 +114,6 @@ Problem Info</button>
                ?>
             </select>
             <label class="control-label" for="select">Problem Type</label><i class="bar"></i>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input id="checkbox-create-problem-type" name="check-new-problem-type" value="1" type="checkbox"/><i class="helper"></i>Create New Problem Type
-            </label>
           </div>
           <div style="display:none;" id="new-problem-type">
             <div class="form-group">
@@ -134,23 +139,33 @@ Problem Info</button>
           </div>
 
           <div class="form-group">
-            <input type="text" name="software"/>
+            <input id="software-number" type="text" name="software"/>
             <label class="control-label" for="input">Software Serial Number</label><i class="bar"></i>
+
+              <div id="alert-area"></div>
           </div>
 
           <div class="form-group">
-            <input type="text" name="hardware"/>
+            <input id="hardware-number" type="text" name="hardware"/>
             <label class="control-label" for="input">Hardware Serial Number</label><i class="bar"></i>
+            <div id="alert-area-2"></div>
           </div>
 
-          <div class="form-group">
-            <select name="os">
+          <div  class="form-group">
+            <select id="os-type" name="os">
               <option>MacOS</option>
               <option>Windows</option>
               <option>Linux</option>
             </select>
             <label class="control-label" for="select">Operating System</label><i class="bar"></i>
           </div>
+          <div class="form-group">
+            <select id="os-version" name="os-ver">
+
+            </select>
+            <label class="control-label" for="select">Version</label><i class="bar"></i>
+          </div>
+
           <div class="form-group">
             <select name="specialist">
               <?php
@@ -162,7 +177,7 @@ Problem Info</button>
 
                ?>
             </select>
-            <label class="control-label" for="select">Assign Specialist</label><i class="bar"></i>
+            <label class="control-label" for="select">Assign Specialist*</label><i class="bar"></i>
           </div>
           <div class="checkbox">
             <label>
@@ -181,8 +196,8 @@ Problem Info</button>
         <div class="status__container">
           <div class="status openingstatus">
             <div class="form-group desc">
-              <textarea required="required" onkeyup="increaseHeight(this);" name="status"></textarea>
-              <label class="control-label" for="textarea" >Opening Status</label><i class="bar"></i>
+              <textarea required="required" name="status"></textarea>
+              <label class="control-label" for="textarea" >Opening Status*</label><i class="bar"></i>
             </div>
           </div>
 
@@ -193,7 +208,19 @@ Problem Info</button>
       <div class="button-container">
         <button class="button" name="submit"><span>Create New Problem</span></button>
       </div>
+      <div id="openModal2" class="modalDialog">
+        <div>	<a href="#close" title="Close" class="close">X</a>
+              <h2 class="text-centered">Add Solution</h2>
 
+                  <div class="form-group desc">
+                    <textarea name="solution"></textarea>
+                    <label class="control-label" for="textarea">Solution</label><i class="bar"></i>
+                </div>
+                <div class="button__container">
+                <a href="#close"><button type="button" class="button__load" style="margin-bottom:10px;" >Save</button></a>
+            </div>
+        </div>
+      </div>
   </form>
 
 
@@ -209,22 +236,9 @@ Problem Info</button>
   </main>
   <?php include '../includes/busy_modal.php' ?>
 
-  <div id="openModal2" class="modalDialog">
-    <div>	<a href="#close" title="Close" class="close">X</a>
-          <h2 class="text-centered">Add Solution</h2>
 
-              <div class="form-group desc">
-                <textarea onkeyup="increaseHeight(this);" name="solution"></textarea>
-                <label class="control-label" for="textarea">Solution</label><i class="bar"></i>
-            </div>
-            <div class="button__container">
-            <button class="button__load" style="margin-bottom:10px;">Save</button>
-        </div>
-    </div>
-  </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
 <script type="text/javascript">
   function googleTranslateElementInit() {

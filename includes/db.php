@@ -5,7 +5,7 @@
 //Server credentials
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "proteam";
 
 //create connection
 try {
